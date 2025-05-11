@@ -8,22 +8,14 @@ export class Account {
 
   constructor(name: string) {
     this.name = name.toLowerCase(); // Utiliza o nome da conta em minúsculo
-    this.initializeStorageIfEmpty();
   }
-
-  private initializeStorageIfEmpty(): void {
-  const data = localStorage.getItem(`account:${this.name}`);
-  if (!data) {
-    AccountStorage.save(this.name, []);
-  }
-}
 
   getTransactions(): Transaction[] {
     return AccountStorage.load(this.name);
   }
 
   getTransactionById(id: string): Transaction | undefined {
-    return this.getTransactions().find(tx => tx.id === id);
+    return this.getTransactions().find((tx) => tx.id === id);
   }
 
   getBalance(): number {
@@ -39,7 +31,9 @@ export class Account {
     }
 
     if (type === TransactionType.EXPENSE && amount > balance) {
-      throw new Error("O valor da remoção não pode ser maior que o saldo atual.");
+      throw new Error(
+        "O valor da remoção não pode ser maior que o saldo atual."
+      );
     }
 
     return true;
