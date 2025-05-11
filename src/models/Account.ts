@@ -8,7 +8,15 @@ export class Account {
 
   constructor(name: string) {
     this.name = name.toLowerCase(); // Utiliza o nome da conta em minúsculo
+    this.initializeStorageIfEmpty();
   }
+
+  private initializeStorageIfEmpty(): void {
+  const data = localStorage.getItem(`account:${this.name}`);
+  if (!data) {
+    AccountStorage.save(this.name, []);
+  }
+}
 
   getTransactions(): Transaction[] {
     return AccountStorage.load(this.name);
