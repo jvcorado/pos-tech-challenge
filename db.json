@@ -1,0 +1,33 @@
+{
+  "accounts": [
+    {
+      "id": "1",
+      "name": "joana"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1",
+      "description": "Salário",
+      "amount": 5000,
+      "type": "INCOME",
+      "date": "2025-05-17T10:00:00.000Z",
+      "account": "joana"
+    },
+    {
+      "id": "2",
+      "description": "Aluguel",
+      "amount": 1550,
+      "type": "EXPENSE",
+      "date": "2025-05-17T18:13:36.286Z"
+    },
+    {
+      "id": "239a",
+      "description": "Mercado",
+      "amount": 500,
+      "type": "EXPENSE",
+      "date": "2025-05-17T18:13:24.886Z",
+      "account": "joana"
+    }
+  ]
+}

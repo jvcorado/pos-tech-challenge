@@ -1,38 +1,55 @@
 // models/Account.ts
 import { Transaction } from "./Transaction";
-import { AccountStorage } from "@/lib/accountStorage";
+import { TransactionService } from "@/services/TransactionService";
 import { TransactionType } from "./TransactionType";
 
 export class Account {
-  name: string;
+  public id?: number;
+  public name: string;
 
-  constructor(name: string) {
-    this.name = name.toLowerCase(); // Utiliza o nome da conta em minúsculo
-    this.initializeStorageIfEmpty();
+  constructor(name: string, id?: number) {
+    this.name = name.toLowerCase();
+    if (id !== undefined) this.id = id;
   }
 
-  private initializeStorageIfEmpty(): void {
-  const data = localStorage.getItem(`account:${this.name}`);
-  if (!data) {
-    AccountStorage.save(this.name, []);
-  }
-}
-
-  getTransactions(): Transaction[] {
-    return AccountStorage.load(this.name);
+  static fromJSON(data: any): Account {
+    return new Account(data.name, data.id);
   }
 
-  getTransactionById(id: string): Transaction | undefined {
-    return this.getTransactions().find(tx => tx.id === id);
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+    };
   }
 
-  getBalance(): number {
-    return AccountStorage.getBalance(this.name);
+  // Busca todas as transações relacionadas a esta conta
+  async getTransactions(): Promise<Transaction[]> {
+    return await TransactionService.getAllByAccount(this.name);
   }
 
-  // Método para validar transações de adição e remoção
-  private validateTransaction(amount: number, type: TransactionType): boolean {
-    const balance = this.getBalance();
+  // Busca uma transação específica pelo ID
+  async getTransactionById(id: number): Promise<Transaction | undefined> {
+    const tx = await TransactionService.getById(id);
+    return tx?.id ? tx : undefined;
+  }
+
+  // Calcula saldo somando receitas e despesas da conta
+  async getBalance(): Promise<number> {
+    const transactions = await this.getTransactions();
+    return transactions.reduce((acc, tx) => {
+      if (tx.type === TransactionType.INCOME) {
+        return acc + tx.amount;
+      } else if (tx.type === TransactionType.EXPENSE) {
+        return acc - tx.amount;
+      }
+      return acc;
+    }, 0);
+  }
+
+  // Valida transação antes de adicionar ou atualizar
+  private async validateTransaction(amount: number, type: TransactionType): Promise<boolean> {
+    const balance = await this.getBalance();
 
     if (type === TransactionType.INCOME && amount <= 0) {
       throw new Error("O valor de adição deve ser maior que zero.");
@@ -45,22 +62,21 @@ export class Account {
     return true;
   }
 
-  // Adiciona uma nova transação, com validação
-  addTransaction(tx: Transaction): void {
-    if (this.validateTransaction(tx.amount, tx.type)) {
-      AccountStorage.add(this.name, tx);
-    }
+  // Adiciona nova transação (salva via API)
+  async addTransaction(tx: Transaction): Promise<void> {
+    await this.validateTransaction(tx.amount, tx.type);
+    await TransactionService.create(tx, this.name);
   }
 
-  // Atualiza uma transação existente, com validação
-  updateTransaction(updatedTx: Transaction): void {
-    if (this.validateTransaction(updatedTx.amount, updatedTx.type)) {
-      AccountStorage.update(this.name, updatedTx);
-    }
+  // Atualiza transação existente (salva via API)
+  async updateTransaction(tx: Transaction): Promise<void> {
+    if (!tx.id) throw new Error("Transação precisa de ID para atualizar.");
+    await this.validateTransaction(tx.amount, tx.type);
+    await TransactionService.update(tx);
   }
 
-  // Deleta uma transação
-  deleteTransaction(id: string): void {
-    AccountStorage.delete(this.name, id);
+  // Deleta transação pelo ID (via API)
+  async deleteTransaction(id: number): Promise<void> {
+    await TransactionService.delete(id);
   }
 }
