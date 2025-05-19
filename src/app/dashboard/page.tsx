@@ -8,8 +8,13 @@ export default function Dashboard() {
   const [balance, setBalance] = useState<number>(0);
 
   useEffect(() => {
-    const account = new Account("joana");
-    setBalance(account.getBalance());
+    async function fetchBalance() {
+        const account = new Account("joana");
+        const bal = await account.getBalance();
+        setBalance(bal);
+    }
+
+    fetchBalance();
   }, []);
 
   return (

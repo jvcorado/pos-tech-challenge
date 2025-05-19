@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Eye, EyeClosed } from "lucide-react";
+import { formatCurrencyBRL } from "@/lib/formatCurrency"
 
 import {
   WelcomeIllustration,
@@ -52,7 +53,7 @@ export default function WelcomeSection({ balance }: WelcomeSectionProps) {
           <div className="h-[2px] w-[180px] bg-white bg mt-4 mb-4 lg:bg-[#FF5031]" />
           <p className="text-white text-base font-normal">Conta Corrente</p>
           <p className="text-white text-3xl font-normal mt-2">
-            {`R$ ${isShowBalance ? balance?.toFixed(2) : "***"}`}
+            {isShowBalance && balance !== null ? formatCurrencyBRL(balance) : "***"}
           </p>
         </div>
       </div>

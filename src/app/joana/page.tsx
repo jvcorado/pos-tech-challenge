@@ -1,10 +1,10 @@
-// src/app/joana/page.tsx
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
 import { Account } from "@/models/Account";
 import { Transaction } from "@/models/Transaction";
 import { TransactionType } from "@/models/TransactionType";
+import { formatCurrencyBRL } from "@/lib/formatCurrency";
 
 export default function JoanaPage() {
   const account = useMemo(() => new Account("joana"), []);
@@ -15,42 +15,52 @@ export default function JoanaPage() {
     amount: "",
     type: "INCOME",
   });
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  // Atualiza extrato e saldo
+  async function refresh() {
+    setLoading(true);
+    try {
+      const txs = await account.getTransactions();
+      setTransactions(txs);
+      const bal = await account.getBalance();
+      setBalance(bal);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     refresh();
   }, []);
 
-  function refresh() {
-    const txs = account.getTransactions();
-    setTransactions(txs);
-    setBalance(account.getBalance());
-  }
-
-  function handleSubmit() {
+  async function handleSubmit() {
     const amount = parseFloat(form.amount);
-    if (!form.description || isNaN(amount)) return;
+    if (!form.description || isNaN(amount)) {
+      setError("Descrição e valor válidos são obrigatórios.");
+      return;
+    }
+
+    setError(null);
 
     try {
-      const tx = new Transaction(
-        form.description,
-        amount,
-        form.type as TransactionType
-      );
+      const tx = new Transaction(form.description, amount, form.type as TransactionType);
 
-      if (editingId) {
+      if (editingId !== null) {
         tx.id = editingId;
         tx.date = new Date();
-        account.updateTransaction(tx);
+        await account.updateTransaction(tx);
         setEditingId(null);
       } else {
-        account.addTransaction(tx);
+        await account.addTransaction(tx);
       }
 
       setForm({ description: "", amount: "", type: "INCOME" });
-      refresh();
-      setError(null);
+      await refresh();
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error));
     }
@@ -62,20 +72,26 @@ export default function JoanaPage() {
       amount: String(tx.amount),
       type: tx.type,
     });
-    setEditingId(tx.id);
+    setEditingId(tx.id ?? null);
   }
 
-  function handleDelete(id: string) {
-    account.deleteTransaction(id);
-    refresh();
+  async function handleDelete(id?: number) {
+    if (!id) return;
+    try {
+      await account.deleteTransaction(id);
+      await refresh();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : String(error));
+    }
   }
 
   return (
     <div className="max-w-xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-2">Conta de Joana</h1>
-      <p className="text-lg mb-4">Saldo atual: R$ {balance.toFixed(2)}</p>
+      <p className="text-lg mb-4">Saldo atual: R$ {formatCurrencyBRL(balance)}</p>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
+      {loading && <p>Carregando...</p>}
 
       <div className="mb-6">
         <h2 className="text-xl font-semibold">Nova Transação</h2>
@@ -103,8 +119,9 @@ export default function JoanaPage() {
         <button
           className="mt-3 px-4 py-2 bg-blue-600 text-white rounded"
           onClick={handleSubmit}
+          disabled={loading}
         >
-          {editingId ? "Salvar Edição" : "Adicionar"}
+          {editingId !== null ? "Salvar Edição" : "Adicionar"}
         </button>
       </div>
 
@@ -118,8 +135,7 @@ export default function JoanaPage() {
             <div>
               <div className="font-semibold">{tx.description}</div>
               <div className="text-sm text-gray-500">
-                {tx.date.toLocaleDateString()} — R$ {tx.amount.toFixed(2)} [
-                {tx.type}]
+                {tx.date.toLocaleDateString()} — R$ {tx.amount.toFixed(2)} [{tx.type}]
               </div>
             </div>
             <div className="space-x-2">
