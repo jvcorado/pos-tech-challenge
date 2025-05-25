@@ -40,12 +40,12 @@ export default function WelcomeSection() {
             <p className="text-white text-xl font-normal mr-[25px]">Saldo</p>
             {isShowBalance ? (
               <Eye
-                className="text-white lg:text-[#FF5031]"
+                className="text-white lg:text-[#FF5031] hover:cursor-pointer"
                 onClick={() => setIsShowBalance(!isShowBalance)}
               />
             ) : (
               <EyeClosed
-                className="text-white lg:text-[#FF5031]"
+                className="text-white lg:text-[#FF5031] hover:cursor-pointer"
                 onClick={() => setIsShowBalance(!isShowBalance)}
               />
             )}
