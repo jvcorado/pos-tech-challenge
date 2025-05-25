@@ -1,25 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import WelcomeSection from "@/views/WelcomeSection";
-import { Account } from "@/models/Account";
+import Menu from "@/components/menu";
+import NewTransactions from "@/components/new_transactions";
 
 export default function Dashboard() {
-  const [balance, setBalance] = useState<number>(0);
-
-  useEffect(() => {
-    async function fetchBalance() {
-        const account = new Account("joana");
-        const bal = await account.getBalance();
-        setBalance(bal);
-    }
-
-    fetchBalance();
-  }, []);
-
   return (
-    <div className="mt-4 ml-6 mr-6 md md:ml-15 md:mr-15">
-      <WelcomeSection balance={balance} />
+    <div className="flex  justify-center h-[calc(100vh_-_6rem)] gap-6 py-6  w-full">
+      <div className="bg-white w-44 rounded-[8px]">
+        <Menu />
+      </div>
+      <div className="flex flex-col items-center  gap-9 ">
+        <WelcomeSection />
+        <NewTransactions />
+      </div>
     </div>
   );
 }

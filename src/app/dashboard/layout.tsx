@@ -7,9 +7,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="bg-[#E4EDE3]">
       <Header />
-      <Container>{children}</Container>
+      <Container className="">{children}</Container>
     </div>
   );
 }

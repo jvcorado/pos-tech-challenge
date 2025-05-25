@@ -2,14 +2,17 @@ import React from "react";
 import { Button as ButtonRoot } from "@/components/ui/button";
 
 export default function Button({
+  onClick,
   text,
   colors = "orange",
 }: {
+  onClick?: () => void;
   text: string;
   colors?: "orange" | "green" | "black" | "outline" | "outline-black";
 }) {
   return (
     <ButtonRoot
+      onClick={onClick}
       className={`h-12 text-white hover:opacity-75 cursor-pointer transition-all duration-700 ease-in-out ${
         colors === "orange"
           ? "bg-[#FF5031] hover:bg-[#FF5031] w-full"

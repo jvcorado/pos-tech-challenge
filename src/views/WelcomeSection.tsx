@@ -4,29 +4,29 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Eye, EyeClosed } from "lucide-react";
-import { formatCurrencyBRL } from "@/lib/formatCurrency"
+import { formatCurrencyBRL } from "@/lib/formatCurrency";
 
 import {
   WelcomeIllustration,
   PixelsOneIllustration,
   PixelsTwoIllustration,
 } from "@/assets";
+import { useBank } from "@/context/BankContext";
 
-type WelcomeSectionProps = {
-  balance: number;
-};
-
-export default function WelcomeSection({ balance }: WelcomeSectionProps) {
+export default function WelcomeSection() {
+  const { balance } = useBank();
   const [isShowBalance, setIsShowBalance] = useState(false);
   const currentFormatedDate = format(new Date(), "EEEE, dd/MM/yyyy", {
     locale: ptBR,
   });
 
+  console.log(balance, "balance");
+
   const capitalizedDate =
     currentFormatedDate.charAt(0).toUpperCase() + currentFormatedDate.slice(1);
 
   return (
-    <div className="h-[655px] md:h-[402px] md:p-8 lg:h-[402px] m relative bg-[#004D61] h-96 flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
+    <div className="h-[655px] md:h-[402px] md:p-8 lg:h-[402px] m relative bg-[#004D61]  flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
       <div className="absolute top-0 left-0 md:left-auto md:right-0 lg:hidden h-[142px] w-[142px] md:h-[177px] md:w-[180px]">
         <PixelsOneIllustration className="w-full h-full" />
       </div>
@@ -53,7 +53,9 @@ export default function WelcomeSection({ balance }: WelcomeSectionProps) {
           <div className="h-[2px] w-[180px] bg-white bg mt-4 mb-4 lg:bg-[#FF5031]" />
           <p className="text-white text-base font-normal">Conta Corrente</p>
           <p className="text-white text-3xl font-normal mt-2">
-            {isShowBalance && balance !== null ? formatCurrencyBRL(balance) : "***"}
+            {isShowBalance && balance !== null
+              ? formatCurrencyBRL(balance)
+              : "***"}
           </p>
         </div>
       </div>

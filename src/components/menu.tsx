@@ -13,8 +13,7 @@ const Menu = () => {
   ];
 
   return (
-    <div className="w-48 p-4">
-      <h1 className="text-2xl font-bold mb-6">Menu</h1>
+    <div className="w-full p-4">
       <ul className="space-y-4">
         {menuItems.map((item) => (
           <li
