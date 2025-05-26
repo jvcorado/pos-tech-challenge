@@ -26,7 +26,7 @@ export default function WelcomeSection() {
     currentFormatedDate.charAt(0).toUpperCase() + currentFormatedDate.slice(1);
 
   return (
-    <div className="h-[655px] md:h-[402px] md:p-8 lg:h-[402px] m relative bg-[#004D61]  flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
+    <div className="h-[655px] md:min-h-[402px] md:p-8 lg:h-[402px] m relative bg-[#004D61]  flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
       <div className="absolute top-0 left-0 md:left-auto md:right-0 lg:hidden h-[142px] w-[142px] md:h-[177px] md:w-[180px]">
         <PixelsOneIllustration className="w-full h-full" />
       </div>
@@ -40,12 +40,12 @@ export default function WelcomeSection() {
             <p className="text-white text-xl font-normal mr-[25px]">Saldo</p>
             {isShowBalance ? (
               <Eye
-                className="text-white lg:text-[#FF5031]"
+                className="text-white lg:text-[#FF5031] hover:cursor-pointer"
                 onClick={() => setIsShowBalance(!isShowBalance)}
               />
             ) : (
               <EyeClosed
-                className="text-white lg:text-[#FF5031]"
+                className="text-white lg:text-[#FF5031] hover:cursor-pointer"
                 onClick={() => setIsShowBalance(!isShowBalance)}
               />
             )}
