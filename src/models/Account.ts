@@ -55,9 +55,9 @@ export class Account {
       throw new Error("O valor de adição deve ser maior que zero.");
     }
 
-    if (type === TransactionType.EXPENSE && amount > balance) {
-      throw new Error("O valor da remoção não pode ser maior que o saldo atual.");
-    }
+    // if (type === TransactionType.EXPENSE && amount > balance) {
+    //   throw new Error("O valor da remoção não pode ser maior que o saldo atual.");
+    // }
 
     return true;
   }
