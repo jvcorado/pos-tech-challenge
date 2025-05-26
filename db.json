@@ -7,131 +7,25 @@
   ],
   "transactions": [
     {
-      "id": "1",
+      "id": "add7",
       "description": "Salário",
       "amount": 5000,
       "type": "INCOME",
-      "date": "2025-05-17T10:00:00.000Z",
-      "account": "joana"
+      "date": "2025-05-26T01:23:05.493Z"
     },
     {
-      "id": "2",
+      "id": "83b7",
       "description": "Aluguel",
-      "amount": 1550,
+      "amount": 1800,
       "type": "EXPENSE",
-      "date": "2025-05-17T18:13:36.286Z"
+      "date": "2025-05-26T01:23:21.331Z"
     },
     {
-      "id": "239a",
-      "description": "Mercado",
+      "id": "6144",
+      "description": "Freelancer",
       "amount": 500,
-      "type": "EXPENSE",
-      "date": "2025-05-17T18:13:24.886Z",
-      "account": "joana"
-    },
-    {
-      "id": "ff5e",
-      "description": "Nova transação",
-      "amount": 10,
-      "type": "light",
-      "date": "2025-05-19T14:55:19.454Z",
-      "account": "joana"
-    },
-    {
-      "id": "b09e",
-      "description": "Nova transação",
-      "amount": 50,
       "type": "INCOME",
-      "date": "2025-05-19T14:55:28.598Z",
-      "account": "joana"
-    },
-    {
-      "id": "82d8",
-      "description": "Nova transação",
-      "amount": 100,
-      "type": "INCOME",
-      "date": "2025-05-19T14:56:10.555Z",
-      "account": "joana"
-    },
-    {
-      "id": "1b70",
-      "description": "Nova transação",
-      "amount": 600,
-      "type": "INCOME",
-      "date": "2025-05-19T14:58:06.585Z",
-      "account": "joana"
-    },
-    {
-      "id": "5ac3",
-      "description": "Nova transação",
-      "amount": 400,
-      "type": "INCOME",
-      "date": "2025-05-19T14:59:48.844Z",
-      "account": "joana"
-    },
-    {
-      "id": "a16c",
-      "description": "Nova transação",
-      "amount": 30,
-      "type": "system",
-      "date": "2025-05-21T17:23:09.506Z",
-      "account": "joana"
-    },
-    {
-      "id": "85a0",
-      "description": "Nova transação",
-      "amount": 40,
-      "type": "dark",
-      "date": "2025-05-21T17:23:16.310Z",
-      "account": "joana"
-    },
-    {
-      "id": "de6f",
-      "description": "Nova transação",
-      "amount": 3000,
-      "type": "light",
-      "date": "2025-05-21T17:23:56.752Z",
-      "account": "joana"
-    },
-    {
-      "id": "11a0",
-      "description": "Nova transação",
-      "amount": 1111,
-      "type": "dark",
-      "date": "2025-05-21T17:25:08.194Z",
-      "account": "joana"
-    },
-    {
-      "id": "624c",
-      "description": "Nova transação",
-      "amount": 233,
-      "type": "light",
-      "date": "2025-05-21T17:25:22.430Z",
-      "account": "joana"
-    },
-    {
-      "id": "b951",
-      "description": "Nova transação",
-      "amount": 111,
-      "type": "INCOME",
-      "date": "2025-05-21T17:25:36.272Z",
-      "account": "joana"
-    },
-    {
-      "id": "2850",
-      "description": "Nova transação",
-      "amount": 111,
-      "type": "INCOME",
-      "date": "2025-05-21T17:25:46.576Z",
-      "account": "joana"
-    },
-    {
-      "id": "80b0",
-      "description": "Nova transação",
-      "amount": 1111,
-      "type": "INCOME",
-      "date": "2025-05-21T17:25:48.964Z",
-      "account": "joana"
+      "date": "2025-05-26T01:26:14.035Z"
     }
   ]
 }
