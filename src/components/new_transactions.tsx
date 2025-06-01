@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { useBank } from "@/context/BankContext";
 import { TransactionType } from "@/models/TransactionType";
@@ -16,6 +16,8 @@ const tipos: { label: string; value: TransactionType }[] = [
   { label: "Pagamento de Boleto", value: TransactionType.EXPENSE },
   { label: "Câmbio de Moeda", value: TransactionType.INCOME },
   { label: "Empréstimo e Financiamento", value: TransactionType.INCOME },
+  { label: "Depósito", value: TransactionType.INCOME },
+  { label: "Transferencia", value: TransactionType.EXPENSE },
 ];
 
 export default function NewTransactions() {
@@ -39,6 +41,12 @@ export default function NewTransactions() {
     return numero.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
+  useEffect(() => {
+    const hoje = new Date();
+    const formatada = hoje.toISOString().split("T")[0];
+    setData(formatada);
+  }, []);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     //const parsedAmount = parseFloat(amount.replace(",", "."));
@@ -53,7 +61,9 @@ export default function NewTransactions() {
       const tx = new Transaction(
         "Nova transação: " + selected?.label,
         parsedAmount,
-        type
+        type,
+        undefined,
+        new Date(data)
       );
       await addTransaction(tx);
       setAmount(""); // limpa campo
@@ -103,7 +113,7 @@ export default function NewTransactions() {
                   <IconeSeta />
                 </Listbox.Button>
 
-                <Listbox.Options className="w-full max-w-[355px] absolute mt-1 border rounded-lg border-[#004D61] bg-white shadow-md text-center text-base z-10">
+                <Listbox.Options className="w-full max-w-[355px] absolute mt-1 border rounded-lg border-[#004D61] bg-white shadow-md text-start text-base z-10">
                   {tipos.map((tipo) => (
                     <Listbox.Option
                       key={`${tipo.label}-${tipo.value}`}
@@ -167,11 +177,11 @@ export default function NewTransactions() {
             required
             value={data}
             onChange={(e) => setData(e.target.value)}
-            className="w-full z-10 max-w-[250px] min-h-[48px] border border-[#004D61] bg-white text-[#444444] rounded-lg py-2 text-base"
+            className="w-full z-10 max-w-[250px] min-h-[48px] border border-[#004D61] bg-white text-[#444444] rounded-lg py-2 px-2 text-base"
           />
         </div>
 
-        <div className="pt-8 ml-4 sm:ml-8 md:ml-16 w-full flex justify-start z-10">
+        <div className="pt-8 ml-4 sm:ml-8 md:ml-16 w-full flex justify-start z-8">
           {error && <p className="text-red-600">{error}</p>}
           <button
             type="submit"

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Transacaobg3 = ({ className }: { className: string }) => (
-<svg width="328"
+<svg className={className} width="328"
     height="231"
     viewBox="0 0 328 231"
     fill="none" xmlns="http://www.w3.org/2000/svg">

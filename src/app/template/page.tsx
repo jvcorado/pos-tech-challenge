@@ -1,11 +1,11 @@
 import Button from "@/components/button";
 import Container from "@/components/container";
-import Menu from "@/components/menu";
 import React from "react";
 import Favicon48 from "../../../public/Favicon 48px.png";
 import Favicon64 from "../../../public/favicon-64px.png";
 import Logo from "../../../public/Logo.png";
 import Image from "next/image";
+import MenuWrapper from "@/components/menuWrapper";
 
 export default function template() {
   return (
@@ -34,7 +34,7 @@ export default function template() {
         <div className="w-14 h-24 bg-[#F8F8F8]"></div>
       </div>
 
-      <Menu />
+      <MenuWrapper />
 
       {/* 25px */}
       <p className="text-black text-2xl  font-normal">
