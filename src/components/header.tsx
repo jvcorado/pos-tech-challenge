@@ -17,7 +17,7 @@ export default function Header() {
         {account.name}
       </span>
 
-      <div className="relative flex items-center gap-4">
+      <div className="relative flex items-center gap-4 cursor-pointer">
         <CircleUserRound
           strokeWidth={1}
           color="#FF5031"

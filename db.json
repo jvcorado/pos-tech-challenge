@@ -3,6 +3,14 @@
     {
       "id": "8980",
       "name": "leticia nakamura"
+    },
+    {
+      "id": "ac52",
+      "name": "roberta"
+    },
+    {
+      "id": "089d",
+      "name": "lucas"
     }
   ],
   "transactions": [
@@ -61,6 +69,54 @@
       "type": "INCOME",
       "date": "2025-06-01T17:07:59.990Z",
       "account": "leticia nakamura"
+    },
+    {
+      "id": "0577",
+      "description": "Nova transação: DOC/TED",
+      "amount": 50,
+      "type": "EXPENSE",
+      "date": "2025-06-01T17:38:31.393Z",
+      "account": "roberta"
+    },
+    {
+      "id": "e564",
+      "description": "Nova transação: Empréstimo e Financiamento",
+      "amount": 40,
+      "type": "INCOME",
+      "date": "2025-06-01T17:39:44.825Z",
+      "account": "roberta"
+    },
+    {
+      "id": "cba1",
+      "description": "Nova transação: DOC/TED",
+      "amount": 5,
+      "type": "EXPENSE",
+      "date": "2025-06-01T18:29:54.268Z",
+      "account": "roberta"
+    },
+    {
+      "id": "8c1f",
+      "description": "Nova transação: Empréstimo e Financiamento",
+      "amount": 100,
+      "type": "INCOME",
+      "date": "2025-06-01T18:30:41.844Z",
+      "account": "roberta"
+    },
+    {
+      "id": "f1cf",
+      "description": "Nova transação: DOC/TED",
+      "amount": 5,
+      "type": "EXPENSE",
+      "date": "2025-05-30T00:00:00.000Z",
+      "account": "roberta"
+    },
+    {
+      "id": "b85c",
+      "description": "Nova transação: Transferencia",
+      "amount": 10,
+      "type": "EXPENSE",
+      "date": "2025-06-01T00:00:00.000Z",
+      "account": "roberta"
     }
   ]
 }
