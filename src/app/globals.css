@@ -126,6 +126,18 @@
   background: linear-gradient(180deg, #004d61 0%, #ffffff 100%);
 }
 
+.bg-btn-transacao {
+  color: #fff;
+  margin-top: 30px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  &:hover {
+    background-color: #3e8698;
+  }
+
 .custom-scroll::-webkit-scrollbar {
   display: none;
 }
