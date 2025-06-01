@@ -118,12 +118,14 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #E4EDE3
   }
 }
 
 .gradient {
   background: linear-gradient(180deg, #004d61 0%, #ffffff 100%);
 }
+
 .bg-btn-transacao {
   color: #fff;
   margin-top: 30px;
@@ -135,4 +137,12 @@
   &:hover {
     background-color: #3e8698;
   }
+
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
 }

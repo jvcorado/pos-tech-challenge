@@ -1,5 +1,12 @@
-// models/Transaction.ts
 import { TransactionType } from "./TransactionType";
+
+interface TransactionJSON {
+  id?: number;
+  description: string;
+  amount: number;
+  type: TransactionType;
+  date: string | Date;
+}
 
 export class Transaction {
   public id?: number;
@@ -22,8 +29,7 @@ export class Transaction {
     this.date = date ?? new Date();
   }
 
-  // Cria uma instância de Transaction a partir de um objeto JSON
-  static fromJSON(data: any): Transaction {
+  static fromJSON(data: TransactionJSON): Transaction {
     return new Transaction(
       data.description,
       data.amount,
@@ -33,7 +39,6 @@ export class Transaction {
     );
   }
 
-  // Converte a instância para um objeto JSON para envio ao backend
   toJSON() {
     return {
       id: this.id,

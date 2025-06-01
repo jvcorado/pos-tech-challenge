@@ -5,15 +5,17 @@ export default function Button({
   onClick,
   text,
   colors = "orange",
+  className,
 }: {
   onClick?: () => void;
   text: string;
   colors?: "orange" | "green" | "black" | "outline" | "outline-black";
+  className?: string;
 }) {
   return (
     <ButtonRoot
       onClick={onClick}
-      className={`h-12 text-white hover:opacity-75 cursor-pointer transition-all duration-700 ease-in-out ${
+      className={`${className} h-12 text-white hover:opacity-75 cursor-pointer transition-all duration-700 ease-in-out ${
         colors === "orange"
           ? "bg-[#FF5031] hover:bg-[#FF5031] w-full"
           : colors === "green"

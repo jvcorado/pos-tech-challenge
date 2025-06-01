@@ -43,8 +43,6 @@ export default function NewTransactions() {
 
     // Converte para float com duas casas decimais
     const numero = (parseFloat(somenteNumeros) / 100).toFixed(2);
-
-    // Campo input formato brasileiro (R$ x.xxx,xx)
     return numero
       .replace(".", ",")
       .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -71,6 +69,8 @@ export default function NewTransactions() {
       setError(err instanceof Error ? err.message : "Erro desconhecido");
     }
   }
+
+  console.log(type, "type");
 
   return (
     <div className="w-full gap-6 bg-[#CBCBCB] flex flex-col rounded-md relative">

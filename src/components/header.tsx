@@ -1,16 +1,47 @@
-import { CircleUserRound } from "lucide-react";
-import React from "react";
-import Container from "./container";
+"use client";
+
+import { CircleUserRound, LogOut } from "lucide-react";
+import React, { useState } from "react";
+import { useBank } from "@/context/BankContext";
+import { useAuth } from "@/context/AuthContext";
+import Menu from "@/components/menu";
 
 export default function Header() {
+  const { account } = useBank();
+  const { logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="bg-[#004D61] h-24 flex items-center justify-end">
-      <Container className="flex items-center justify-end gap-10">
-        <p className="text-white font-semibold text-sm">
-          Joana da Silva Oliveira
-        </p>
-        <CircleUserRound strokeWidth={1} color="#FF5031" size={40} />
-      </Container>
+    <header className="bg-[#004D61] h-24 flex items-center justify-between px-6">
+      <span className="text-white font-bold text-sm">{account.name}</span>
+
+      <div className="relative flex items-center gap-4">
+        <CircleUserRound
+          strokeWidth={1}
+          color="#FF5031"
+          size={40}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        />
+
+        {/* Menu Dropdown no mobile */}
+        {isMenuOpen && (
+          <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded shadow z-50 ">
+            <div className="block lg:hidden">
+              <Menu />
+            </div>
+
+            {/* Logout no menu (opcional, redundante) */}
+            <div className="border-t p-2 ">
+              <button
+                onClick={logout}
+                className="text-red-500  flex items-center gap-2 w-full text-center text-sm  cursor-pointer"
+              >
+                <LogOut /> Sair
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
