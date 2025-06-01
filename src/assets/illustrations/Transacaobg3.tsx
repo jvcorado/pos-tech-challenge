@@ -1,6 +1,6 @@
 import React from "react";
 
-const Transacaobg3 = () => (
+const Transacaobg3 = ({ className }: { className: string }) => (
 <svg width="328"
     height="231"
     viewBox="0 0 328 231"
