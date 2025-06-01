@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { Account } from "@/models/Account";
 import { Transaction } from "@/models/Transaction";
+import { useAuth } from "./AuthContext";
 
 interface BankContextData {
   account: Account;
@@ -24,17 +25,16 @@ interface BankContextData {
 
 const BankContext = createContext<BankContextData | undefined>(undefined);
 
-export const BankProvider: React.FC<{
-  children: React.ReactNode;
-  accountName: string;
-}> = ({ children, accountName }) => {
-  const [account] = useState(() => new Account(accountName));
+export const BankProvider = ({ children }: { children: React.ReactNode }) => {
+  const { account } = useAuth();
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
+    if (!account) return;
     setLoading(true);
     setError(null);
     try {
@@ -50,23 +50,31 @@ export const BankProvider: React.FC<{
   }, [account]);
 
   const addTransaction = async (tx: Transaction) => {
+    if (!account) throw new Error("Conta não disponível.");
     await account.addTransaction(tx);
     await refresh();
   };
 
   const updateTransaction = async (tx: Transaction) => {
+    if (!account) throw new Error("Conta não disponível.");
     await account.updateTransaction(tx);
     await refresh();
   };
 
   const deleteTransaction = async (id: number) => {
+    if (!account) throw new Error("Conta não disponível.");
     await account.deleteTransaction(id);
     await refresh();
   };
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    if (account) refresh();
+  }, [refresh, account]);
+
+  // Se não houver conta, ainda renderiza — apenas não fornece contexto útil
+  if (!account) {
+    return <>{children}</>;
+  }
 
   return (
     <BankContext.Provider
@@ -90,7 +98,9 @@ export const BankProvider: React.FC<{
 export const useBank = () => {
   const context = useContext(BankContext);
   if (!context) {
-    throw new Error("useBank must be used within a BankProvider");
+    throw new Error(
+      "useBank must be used within a BankProvider (com usuário logado)"
+    );
   }
   return context;
 };

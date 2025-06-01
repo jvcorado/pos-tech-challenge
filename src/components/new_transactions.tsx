@@ -35,11 +35,13 @@ export default function NewTransactions() {
     }
   }
 
+  console.log(type, "type");
+
   return (
     <div className="flex flex-col w-full items-start gap-6 bg-[#CBCBCB] p-8 rounded-[8px]">
       <p className="text-[#ffffff] text-2xl font-normal">Nova transação</p>
 
-      <div className="w-96">
+      <div className="w-full md:max-w-96">
         <Select
           value={type}
           onChange={(val: string) => setType(val as TransactionType)}

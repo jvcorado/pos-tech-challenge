@@ -12,7 +12,7 @@ export class Account {
     if (id !== undefined) this.id = id;
   }
 
-  static fromJSON(data: any): Account {
+  static fromJSON(data: { name: string; id?: number }): Account {
     return new Account(data.name, data.id);
   }
 
@@ -49,8 +49,6 @@ export class Account {
 
   // Valida transação antes de adicionar ou atualizar
   private async validateTransaction(amount: number, type: TransactionType): Promise<boolean> {
-    const balance = await this.getBalance();
-
     if (type === TransactionType.INCOME && amount <= 0) {
       throw new Error("O valor de adição deve ser maior que zero.");
     }

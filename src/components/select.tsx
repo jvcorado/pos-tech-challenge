@@ -19,9 +19,8 @@ export default function Select({
         <SelectValue placeholder="Selecione o tipo de transação" />
       </SelectTrigger>
       <SelectContent className="border-[#47A138] outline-0 cursor-pointer ">
-        <SelectItem value="light">Câmbio de Moeda</SelectItem>
-        <SelectItem value="dark">DOC/TED</SelectItem>
-        <SelectItem value="system">Empréstimo e Financiamento</SelectItem>
+        <SelectItem value="INCOME">DEPOSITO</SelectItem>
+        <SelectItem value="EXPENSE">TRASNFERENCIA</SelectItem>
       </SelectContent>
     </SelectRoot>
   );

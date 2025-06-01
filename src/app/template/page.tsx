@@ -1,8 +1,6 @@
 import Button from "@/components/button";
 import Container from "@/components/container";
-import Input from "@/components/input";
 import Menu from "@/components/menu";
-import Select from "@/components/select";
 import React from "react";
 import Favicon48 from "../../../public/Favicon 48px.png";
 import Favicon64 from "../../../public/favicon-64px.png";
@@ -13,8 +11,8 @@ export default function template() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <h1 className="text-2xl font-bold ">Template</h1>
-      <Input />
-      <Select />
+      {/*   <Input />
+      <Select /> */}
       <Button text="Concluir transação" />
       <Button colors="green" text="Concluir" />
       <Button colors="outline" text="Já tenho conta" />

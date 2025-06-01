@@ -1,6 +1,4 @@
 import Container from "@/components/container";
-import Header from "@/components/header";
-import ProtectedRoute from "@/components/protectedRoute";
 
 export default function Layout({
   children,
@@ -8,9 +6,8 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <ProtectedRoute>
-      <Header />
+    <div>
       <Container>{children}</Container>
-    </ProtectedRoute>
+    </div>
   );
 }

@@ -1,31 +1,38 @@
 {
   "accounts": [
     {
-      "id": "1",
-      "name": "joana"
+      "id": "b4c0",
+      "name": "guilherme teste"
+    },
+    {
+      "id": "c9d4",
+      "name": "teste"
+    },
+    {
+      "id": "b1e3",
+      "name": "jv"
+    },
+    {
+      "id": "141d",
+      "name": "teste 02"
     }
   ],
   "transactions": [
     {
-      "id": "add7",
-      "description": "Salário",
-      "amount": 5000,
+      "id": "94ad",
+      "description": "Nova transação",
+      "amount": 100,
       "type": "INCOME",
-      "date": "2025-05-26T01:23:05.493Z"
+      "date": "2025-06-01T00:30:53.951Z",
+      "account": "teste"
     },
     {
-      "id": "83b7",
-      "description": "Aluguel",
-      "amount": 1800,
-      "type": "EXPENSE",
-      "date": "2025-05-26T01:23:21.331Z"
-    },
-    {
-      "id": "6144",
-      "description": "Freelancer",
-      "amount": 500,
+      "id": "f533",
+      "description": "Nova transação",
+      "amount": 2000,
       "type": "INCOME",
-      "date": "2025-05-26T01:26:14.035Z"
+      "date": "2025-06-01T00:36:42.266Z",
+      "account": "jv"
     }
   ]
 }

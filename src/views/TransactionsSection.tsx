@@ -90,7 +90,7 @@ export default function TransactionsSection() {
 
   if (transactions.length === 0 && !loading) {
     return (
-      <div className="flex flex-wrap items-center justify-center h-50 lg:h-10 min-w-[250px]">
+      <div className="flex flex-col items-center justify-center h-50 lg:h-10 min-w-[250px]">
         <h1 className="text-[25px] font-bold">Extrato</h1>
         <p className="text-[16px]">Nenhuma transação foi realizada</p>
       </div>
@@ -172,7 +172,7 @@ export default function TransactionsSection() {
             </label>
             <Input
               id="description"
-              value={editableTransaction?.description || ''}
+              value={editableTransaction?.description || ""}
               onChange={(e) => {
                 setEditableTransaction((prev) =>
                   prev ? { ...prev, description: e.target.value } : prev
