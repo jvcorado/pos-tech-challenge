@@ -4,7 +4,7 @@ import { CircleUserRound, LogOut } from "lucide-react";
 import React, { useState } from "react";
 import { useBank } from "@/context/BankContext";
 import { useAuth } from "@/context/AuthContext";
-import Menu from "@/components/menu";
+import MenuWrapper from "./menuWrapper";
 
 export default function Header() {
   const { account } = useBank();
@@ -29,7 +29,7 @@ export default function Header() {
         {isMenuOpen && (
           <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded shadow z-50 ">
             <div className="block lg:hidden">
-              <Menu />
+              <MenuWrapper />
             </div>
 
             {/* Logout no menu (opcional, redundante) */}

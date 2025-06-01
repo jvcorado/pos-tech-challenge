@@ -1,6 +1,6 @@
 "use client";
 
-import Menu from "@/components/menu";
+import MenuWrapper from "@/components/menuWrapper";
 import TransactionsSection from "@/views/TransactionsSection";
 
 export default function MaintenancePage() {
@@ -9,7 +9,7 @@ export default function MaintenancePage() {
         <div className="flex flex-col lg:flex-row justify-center items-start gap-6 py-6 px-4 w-full  md:h-[calc(100vh_-_6rem)] max-w-screen-xl mx-auto">
             {/* Menu lateral (vira horizontal em telas menores) */}
             <div className="bg-white w-full max-w-[282px] h-full rounded-[8px] hidden lg:block">
-                <Menu />
+                <MenuWrapper />
             </div>
 
             {/* Seção principal */}
