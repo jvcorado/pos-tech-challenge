@@ -2,11 +2,8 @@
 
 import Menu from "@/components/menu";
 import TransactionsSection from "@/views/TransactionsSection";
-import { useSearchParams } from "next/navigation";
 
 export default function MaintenancePage() {
-    const searchParams = useSearchParams();
-
     return (
 
         <div className="flex flex-col lg:flex-row justify-center items-start gap-6 py-6 px-4 w-full  md:h-[calc(100vh_-_6rem)] max-w-screen-xl mx-auto">
