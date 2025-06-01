@@ -15,6 +15,10 @@
     {
       "id": "141d",
       "name": "teste 02"
+    },
+    {
+      "id": "ab22",
+      "name": "grupo"
     }
   ],
   "transactions": [
@@ -33,6 +37,14 @@
       "type": "INCOME",
       "date": "2025-06-01T00:36:42.266Z",
       "account": "jv"
+    },
+    {
+      "id": "3beb",
+      "description": "Nova transação",
+      "amount": 200,
+      "type": "INCOME",
+      "date": "2025-06-01T01:05:51.195Z",
+      "account": "grupo"
     }
   ]
 }

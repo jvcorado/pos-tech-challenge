@@ -58,7 +58,7 @@ export default function Register() {
             {error && <p className="text-sm text-red-500">{error}</p>}
             <Button
               type="submit"
-              className="w-full bg-transparent border border-[#47A138] text-[#47A138] hover:bg-[#d9f3d542] "
+              className="w-full  h-12 bg-transparent border border-[#47A138] text-[#47A138] hover:bg-[#d9f3d542] "
               disabled={loading}
             >
               {loading ? "Registrando..." : "Registrar"}
