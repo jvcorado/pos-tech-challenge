@@ -1,54 +1,46 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Listbox } from '@headlessui/react';
-import { useBank } from '@/context/BankContext';
-import { TransactionType } from '@/models/TransactionType';
-import { Transaction } from '@/models/Transaction';
+import { useState } from "react";
+import { Listbox } from "@headlessui/react";
+import { useBank } from "@/context/BankContext";
+import { TransactionType } from "@/models/TransactionType";
+import { Transaction } from "@/models/Transaction";
 
-import Transacaobg2 from '@/assets/illustrations/Transacaobg2';
-import Transacaobg3 from '@/assets/illustrations/Transacaobg3';
-import Transacaobg1 from '@/assets/illustrations/Transacaobg1';
-import IconeSeta from '@/assets/illustrations/IconeSeta';
-
+import Transacaobg2 from "@/assets/illustrations/Transacaobg2";
+import Transacaobg3 from "@/assets/illustrations/Transacaobg3";
+import Transacaobg1 from "@/assets/illustrations/Transacaobg1";
+import IconeSeta from "@/assets/illustrations/IconeSeta";
 
 const tipos: { label: string; value: TransactionType }[] = [
-  { label: 'DOC/TED', value: TransactionType.EXPENSE },
-  { label: 'Pagamento de Boleto', value: TransactionType.EXPENSE },
-  { label: 'Câmbio de Moeda', value: TransactionType.INCOME },
-  { label: 'Empréstimo e Financiamento', value: TransactionType.INCOME },
+  { label: "DOC/TED", value: TransactionType.EXPENSE },
+  { label: "Pagamento de Boleto", value: TransactionType.EXPENSE },
+  { label: "Câmbio de Moeda", value: TransactionType.INCOME },
+  { label: "Empréstimo e Financiamento", value: TransactionType.INCOME },
 ];
 
-
-
-
-
 export default function NewTransactions() {
-
   //const [valor, setValor] = useState('');
-  const [data, setData] = useState('');
-  const [selected, setSelected] = useState<typeof tipos[0] | null>(null);
+  const [data, setData] = useState("");
+  const [selected, setSelected] = useState<(typeof tipos)[0] | null>(null);
 
   const { addTransaction, refresh } = useBank();
 
   const [type, setType] = useState<TransactionType>(TransactionType.INCOME);
   const [amount, setAmount] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [mensagem, setMensagem] = useState('');
+  const [mensagem, setMensagem] = useState("");
 
   const formatarValor = (valor: string) => {
-
     // Remove tudo que não for número
     const somenteNumeros = valor.replace(/\D/g, ".");
 
     // Converte para float com duas casas decimais
     const numero = (parseFloat(somenteNumeros) / 100).toFixed(2);
-    return numero
-      .replace(".", ",")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return numero.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     //const parsedAmount = parseFloat(amount.replace(",", "."));
     const parsedAmount = parseFloat((Number(amount) / 100).toFixed(2));
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
@@ -58,13 +50,17 @@ export default function NewTransactions() {
 
     try {
       setError(null);
-      const tx = new Transaction("Nova transação: " + selected?.label, parsedAmount, type);
+      const tx = new Transaction(
+        "Nova transação: " + selected?.label,
+        parsedAmount,
+        type
+      );
       await addTransaction(tx);
       setAmount(""); // limpa campo
       setType(selected?.value as TransactionType); // opcional
       refresh(); //
       setMensagem("Transação concluída com sucesso!");
-      setTimeout(() => setMensagem(''), 20000);
+      setTimeout(() => setMensagem(""), 20000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro desconhecido");
     }
@@ -82,23 +78,27 @@ export default function NewTransactions() {
         Nova transação
       </h2>
 
-
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         noValidate
         className="relative min-h-[402px] flex flex-col z-10 "
       >
         {/* Tipo de transação */}
         <div className="z-10 relative pt-5 rounded-md ml-4 sm:ml-8 md:ml-16">
-          <Listbox value={selected} onChange={(value) => {
-            setSelected(value);
-            setType(value?.value as TransactionType);
-          }}>
-            {({ open }) => (
+          <Listbox
+            value={selected}
+            onChange={(value) => {
+              setSelected(value);
+              setType(value?.value as TransactionType);
+            }}
+          >
+            {() => (
               <div className="relative">
                 <Listbox.Button className="w-full max-w-[355px] z-10 min-h-[48px] border border-[#004D61] rounded-lg bg-white text-[#444444] px-4 py-2 text-base flex items-center justify-between">
                   <span className="truncate">
-                    {selected ? selected.label : 'Selecione o tipo de transação'}
+                    {selected
+                      ? selected.label
+                      : "Selecione o tipo de transação"}
                   </span>
                   <IconeSeta />
                 </Listbox.Button>
@@ -109,7 +109,11 @@ export default function NewTransactions() {
                       key={`${tipo.label}-${tipo.value}`}
                       value={tipo}
                       className={({ active }) =>
-                        `cursor-pointer px-4 py-2 ${active ? 'bg-[#E4EDE3] text-black rounded-lg' : 'text-[#444444]'}`
+                        `cursor-pointer px-4 py-2 ${
+                          active
+                            ? "bg-[#E4EDE3] text-black rounded-lg"
+                            : "text-[#444444]"
+                        }`
                       }
                     >
                       {tipo.label}
@@ -119,12 +123,19 @@ export default function NewTransactions() {
               </div>
             )}
           </Listbox>
-          <input type="hidden" name="tipoTransacao" value={selected?.value || ""} />
+          <input
+            type="hidden"
+            name="tipoTransacao"
+            value={selected?.value || ""}
+          />
         </div>
 
         {/* valor */}
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16 w-full max-w-[250px]">
-          <label htmlFor="valor" className="block font-medium mb-1 text-white text-base">
+          <label
+            htmlFor="valor"
+            className="block font-medium mb-1 text-white text-base"
+          >
             Valor:
           </label>
           <input
@@ -140,11 +151,13 @@ export default function NewTransactions() {
               setAmount(rawValue);
             }}
           />
-
         </div>
         {/* data */}
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16">
-          <label htmlFor="data" className="block font-medium mb-1 text-white text-base">
+          <label
+            htmlFor="data"
+            className="block font-medium mb-1 text-white text-base"
+          >
             Data:
           </label>
           <input
@@ -181,6 +194,5 @@ export default function NewTransactions() {
         <Transacaobg3 className="w-[100px] h-[100px] sm:w-[120px] right-0 sm:h-[120px] items-center object-contain z-10 lg:hidden" />
       </div>
     </div>
-
   );
 }

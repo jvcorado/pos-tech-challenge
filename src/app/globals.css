@@ -118,7 +118,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #E4EDE3
+    background-color: #e4ede3;
   }
 }
 
@@ -137,6 +137,7 @@
   &:hover {
     background-color: #3e8698;
   }
+}
 
 .custom-scroll::-webkit-scrollbar {
   display: none;

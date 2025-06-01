@@ -12,8 +12,10 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-[#004D61] h-24 flex items-center justify-between px-6">
-      <span className="text-white font-bold text-sm">{account.name}</span>
+    <header className="bg-[#004D61] h-24 flex items-center justify-between px-6 sticky top-0 left-0 z-50">
+      <span className="text-white font-bold text-base capitalize">
+        {account.name}
+      </span>
 
       <div className="relative flex items-center gap-4">
         <CircleUserRound
