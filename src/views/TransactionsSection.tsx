@@ -31,16 +31,6 @@ export default function TransactionsSection() {
     const [isSelectingTransactionItem, setIsSelectingTransactionItem] =
         useState(false);
 
-    const handleEditTransaction = () => {
-        setIsEditTransactionItem(true);
-        setIsDeleteTransactionItem(false);
-    };
-
-    const handleDeleteTransaction = () => {
-        setIsDeleteTransactionItem(true);
-        setIsEditTransactionItem(false);
-    };
-
     const handleSelectTransactionItem = (transaction: Transaction) => {
         setEditableTransaction({
             id: transaction.id,

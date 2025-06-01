@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 
 export default function MaintenancePage() {
     const searchParams = useSearchParams();
-    const name = searchParams.get("name") || "Serviço";
 
     return (
 
