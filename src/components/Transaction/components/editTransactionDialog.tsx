@@ -1,6 +1,6 @@
 import * as React from "react";
-import Button from "./button";
-import Dialog from "./ui/dialog";
+import Button from "../../button";
+import Dialog from "../../ui/dialog";
 
 const EditTransactionDialog = ({
   open,
@@ -18,7 +18,6 @@ const EditTransactionDialog = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div className="z-999">
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
@@ -44,7 +43,6 @@ const EditTransactionDialog = ({
     >
       {children || null}
     </Dialog>
-    </div>
   );
 };
 export default EditTransactionDialog;

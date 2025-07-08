@@ -42,9 +42,9 @@ export default function NewTransactions() {
   };
 
   useEffect(() => {
-    const hoje = new Date();
-    const formatada = hoje.toISOString().split("T")[0];
-    setData(formatada);
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+    setData(formattedDate);
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -63,7 +63,7 @@ export default function NewTransactions() {
         parsedAmount,
         type,
         undefined,
-        new Date(data)
+        new Date()
       );
       await addTransaction(tx);
       setAmount(""); // limpa campo
@@ -76,7 +76,6 @@ export default function NewTransactions() {
     }
   }
 
-  console.log(type, "type");
 
   return (
     <div className="w-full gap-6 bg-[#CBCBCB] flex flex-col rounded-md relative">

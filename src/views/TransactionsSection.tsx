@@ -1,225 +1,194 @@
 "use client";
 
 import React, { useState } from "react";
-import { NumericFormat } from "react-number-format";
-import { Pencil, Trash2, Loader, X } from "lucide-react";
+import {
+  Pencil,
+  Trash2,
+  Loader,
+  X,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 
-import TransactionItem from "@/components/transactionItem";
+import TransactionList from "@/components/Transaction/components/transactionList";
 import ActionButton from "@/components/actionButton";
-import EditTransactionDialog from "@/components/editTransactionDialog";
+import EditTransactionDialog from "@/components/Transaction/components/editTransactionDialog";
+import FilterTransactionsDialog from "@/components/Transaction/components/filterTransactionsDialog";
+import SelectTransactionPeriod from "@/components/Transaction/components/selectTransactionPeriod";
 import Input from "@/components/input";
 import { useBank } from "@/context/BankContext";
 import { Transaction } from "@/models/Transaction";
 import { TransactionType } from "@/models/TransactionType";
+import SelectTransactionType from "@/components/Transaction/components/selectTransactionType";
+import EditTransactionForm from "@/components/Transaction/components/editTransactionForm";
 
 type EditableTransaction = {
-    id?: number;
-    description: string;
-    amount: number;
-    type: TransactionType;
-    date: Date;
+  id?: number;
+  description: string;
+  amount: number;
+  type: TransactionType;
+  date: Date;
 };
 
 export default function TransactionsSection() {
-    const { transactions, updateTransaction, deleteTransaction, loading } =
-        useBank();
-    const [isEditTransactionItem, setIsEditTransactionItem] = useState(false);
-    const [isDeleteTransactionItem, setIsDeleteTransactionItem] = useState(false);
-    const [editableTransaction, setEditableTransaction] = useState<
-        EditableTransaction | undefined
-    >(undefined);
-    const [isSelectingTransactionItem, setIsSelectingTransactionItem] =
-        useState(false);
+  const { transactions, updateTransaction, deleteTransaction, loading } =
+    useBank();
+  const [isEditTransactionItem, setIsEditTransactionItem] = useState(false);
+  const [isDeleteTransactionItem, setIsDeleteTransactionItem] = useState(false);
+  const [isOpenFilterDialog, setIsOpenFilterDialog] = useState(false);
+  const [editableTransaction, setEditableTransaction] = useState<
+    EditableTransaction | undefined
+  >(undefined);
+  const [isSelectingTransactionItem, setIsSelectingTransactionItem] =
+    useState(false);
 
-    const handleSelectTransactionItem = (transaction: Transaction) => {
-        setEditableTransaction({
-            id: transaction.id,
-            description: transaction.description,
-            amount: transaction.amount,
-            type: transaction.type,
-            date: transaction.date,
-        });
+  const handleSelectTransactionItem = (transaction: Transaction) => {
+    setEditableTransaction({
+      id: transaction.id,
+      description: transaction.description,
+      amount: transaction.amount,
+      type: transaction.type,
+      date: transaction.date,
+    });
 
-        setIsSelectingTransactionItem(true);
-    };
+    setIsSelectingTransactionItem(true);
+  };
 
-    const handleConfirmEditTransaction = () => {
-        if (editableTransaction) {
-            const updatedTransaction = new Transaction(
-                editableTransaction.description,
-                editableTransaction.amount,
-                editableTransaction.type,
-                editableTransaction.id,
-                editableTransaction.date
-            );
-            updateTransaction(updatedTransaction);
-            setIsSelectingTransactionItem(false);
-            setIsEditTransactionItem(false);
-            setEditableTransaction(undefined);
-        }
-    };
-
-    const handleConfirmDeleteTransaction = () => {
-        if (editableTransaction) {
-            deleteTransaction(editableTransaction.id!);
-
-            setIsSelectingTransactionItem(false);
-            setIsDeleteTransactionItem(false);
-            setEditableTransaction(undefined);
-        }
-    };
-
-    if (transactions.length === 0 && loading) {
-        return (
-            <div className="flex flex-wrap items-center justify-center gap-2 h-50 lg:h-10 lg:min-w-[250px]">
-                <p className="text-[16px] font-bold">Carregando transações</p>
-                <Loader size={20} color="#47A138" />
-            </div>
-        );
+  const handleConfirmEditTransaction = () => {
+    if (editableTransaction) {
+      const updatedTransaction = new Transaction(
+        editableTransaction.description,
+        editableTransaction.amount,
+        editableTransaction.type,
+        editableTransaction.id,
+        editableTransaction.date
+      );
+      updateTransaction(updatedTransaction);
+      setIsSelectingTransactionItem(false);
+      setIsEditTransactionItem(false);
+      setEditableTransaction(undefined);
     }
+  };
 
-    if (transactions.length === 0 && !loading) {
-        return (
-            <div className="flex flex-col items-center justify-center h-50 lg:h-10 min-w-[250px]">
-                <h1 className="text-[25px] font-bold">Extrato</h1>
-                <p className="text-[16px]">Nenhuma transação foi realizada</p>
-            </div>
-        );
+  const handleConfirmDeleteTransaction = () => {
+    if (editableTransaction) {
+      deleteTransaction(editableTransaction.id!);
+
+      setIsSelectingTransactionItem(false);
+      setIsDeleteTransactionItem(false);
+      setEditableTransaction(undefined);
     }
+  };
 
+  if (transactions.length === 0 && loading) {
     return (
-        <div className="h-auto w-auto max-h-full overflow-y-auto custom-scroll relative bg-white flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
-            <div className="flex flex-col text-center md:text-left gap-[24px] overflow-y-auto custom-scroll">
-                <div className="flex flex-rol justify-between pr-3">
-                    <h1 className="text-[25px] font-bold">Extrato</h1>
-                    <div className="flex gap-3">
-                        <ActionButton
-                            onClick={() => {
-                                // Alterna entre ativar e desativar o modo de edição
-                                setIsEditTransactionItem((prev) => !prev);
-                                setIsDeleteTransactionItem(false);
-                                setIsSelectingTransactionItem(false);
-                                setEditableTransaction(undefined);
-                            }}
-                            content={
-                                isEditTransactionItem ? (
-                                    <X size={22} />
-                                ) : (
-                                    <Pencil size={22} />
-                                )
-                            }
-                            colors="blue"
-                            size="default"
-                        />
-
-                        <ActionButton
-                            onClick={() => {
-                                // Alterna entre ativar e desativar o modo de exclusão
-                                setIsDeleteTransactionItem((prev) => !prev);
-                                setIsEditTransactionItem(false);
-                                setIsSelectingTransactionItem(false);
-                                setEditableTransaction(undefined);
-                            }}
-                            content={
-                                isDeleteTransactionItem ? (
-                                    <X size={22} />
-                                ) : (
-                                    <Trash2 size={22} />
-                                )
-                            }
-                            colors="blue"
-                            size="default"
-                        />
-
-                    </div>
-                </div>
-                {transactions.map((transaction, index) => (
-                    <div key={index} className="pr-1">
-                        <div className="flex justify-end">
-                            {isEditTransactionItem && (
-                                <ActionButton
-                                    onClick={() => handleSelectTransactionItem(transaction)}
-                                    content={<Pencil size={14} />}
-                                    colors="blue"
-                                    size="sm"
-                                />
-                            )}
-                            {isDeleteTransactionItem && (
-                                <ActionButton
-                                    onClick={() => handleSelectTransactionItem(transaction)}
-                                    content={<Trash2 size={14} />}
-                                    colors="blue"
-                                    size="sm"
-                                />
-                            )}
-                        </div>
-                        <TransactionItem
-                            key={index}
-                            date={transaction.date}
-                            transactionDescription={transaction.description}
-                            transactionType={transaction.type}
-                            value={transaction.amount}
-                        />
-                    </div>
-                ))}
-            </div>
-            <EditTransactionDialog
-                title={`${isEditTransactionItem ? "Editar" : "Deletar"} transação`}
-                description={`${isEditTransactionItem
-                        ? "Edite os dados da transação"
-                        : "Você tem certeza que deseja deletar essa transação?"
-                    }`}
-                onConfirmAction={
-                    isEditTransactionItem
-                        ? handleConfirmEditTransaction
-                        : handleConfirmDeleteTransaction
-                }
-                open={isSelectingTransactionItem}
-                onOpenChange={setIsSelectingTransactionItem}
-            >
-                {isEditTransactionItem && (
-                    <div className="flex flex-col gap-2 mt-4">
-                        <label
-                            htmlFor="description"
-                            className="text-[#47A138] text-[13px] font-bold"
-                        >
-                            Descrição
-                        </label>
-                        <Input
-                            id="description"
-                            value={editableTransaction?.description || ""}
-                            onChange={(e) => {
-                                setEditableTransaction((prev) =>
-                                    prev ? { ...prev, description: e.target.value } : prev
-                                );
-                            }}
-                        />
-                        <label
-                            htmlFor="amount"
-                            className="text-[#47A138] text-[13px] font-bold"
-                        >
-                            Valor
-                        </label>
-                        <NumericFormat
-                            id="amount"
-                            value={editableTransaction?.amount}
-                            onValueChange={(values) => {
-                                const rawValue = Number(values.value);
-
-                                setEditableTransaction((prev) =>
-                                    prev ? { ...prev, amount: rawValue } : prev
-                                );
-                            }}
-                            thousandSeparator="."
-                            decimalSeparator=","
-                            prefix="R$ "
-                            decimalScale={2}
-                            allowNegative={false}
-                            customInput={Input}
-                        />
-                    </div>
-                )}
-            </EditTransactionDialog>
-        </div>
+      <div className="flex flex-wrap items-center justify-center gap-2 h-50 lg:h-10 lg:min-w-[250px]">
+        <p className="text-[16px] font-bold">Carregando transações</p>
+        <Loader size={20} color="#47A138" />
+      </div>
     );
+  }
+
+  if (transactions.length === 0 && !loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-50 lg:h-10 min-w-[250px]">
+        <h1 className="text-[25px] font-bold">Extrato</h1>
+        <p className="text-[16px]">Nenhuma transação foi realizada</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-auto w-auto max-h-full overflow-y-auto custom-scroll relative bg-white flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
+      <div className="flex flex-col text-center md:text-left gap-[24px] overflow-y-auto custom-scroll">
+        <div className="flex relative w-full gap-2">
+          <Input
+            icon={<Search size={18} />}
+            placeholder="Buscar transação..."
+            value=""
+            onChange={() => {}}
+          />
+          <ActionButton
+            onClick={() => setIsOpenFilterDialog((prev) => !prev)}
+            content={<SlidersHorizontal size={18} />}
+            colors="green"
+            size="md"
+          />
+        </div>
+        <div className="flex flex-rol justify-between">
+          <h1 className="text-[25px] font-bold">Extrato</h1>
+          <div className="flex gap-3">
+            <ActionButton
+              onClick={() => {
+                setIsEditTransactionItem((prev) => !prev);
+                setIsDeleteTransactionItem(false);
+                setIsSelectingTransactionItem(false);
+                setEditableTransaction(undefined);
+              }}
+              content={
+                isEditTransactionItem ? <X size={22} /> : <Pencil size={22} />
+              }
+              colors="blue"
+              size="default"
+            />
+
+            <ActionButton
+              onClick={() => {
+                setIsDeleteTransactionItem((prev) => !prev);
+                setIsEditTransactionItem(false);
+                setIsSelectingTransactionItem(false);
+                setEditableTransaction(undefined);
+              }}
+              content={
+                isDeleteTransactionItem ? <X size={22} /> : <Trash2 size={22} />
+              }
+              colors="blue"
+              size="default"
+            />
+          </div>
+        </div>
+        <TransactionList
+          transactions={transactions}
+          isEditTransactionItem={isEditTransactionItem}
+          isDeleteTransactionItem={isDeleteTransactionItem}
+          handleSelectTransactionItem={handleSelectTransactionItem}
+        />
+      </div>
+      <EditTransactionDialog
+        title={`${isEditTransactionItem ? "Editar" : "Deletar"} transação`}
+        description={`${
+          isEditTransactionItem
+            ? "Edite os dados da transação"
+            : "Você tem certeza que deseja deletar essa transação?"
+        }`}
+        onConfirmAction={
+          isEditTransactionItem
+            ? handleConfirmEditTransaction
+            : handleConfirmDeleteTransaction
+        }
+        open={isSelectingTransactionItem}
+        onOpenChange={setIsSelectingTransactionItem}
+      >
+        {isEditTransactionItem && (
+          <EditTransactionForm
+            transaction={editableTransaction}
+            onChange={setEditableTransaction}
+          />
+        )}
+      </EditTransactionDialog>
+      <FilterTransactionsDialog
+        open={isOpenFilterDialog}
+        title="Filtrar transações"
+        description="Selecione os filtros desejados para visualizar as transações."
+        onOpenChange={setIsDeleteTransactionItem}
+        onConfirmAction={() => {}}
+        isFullScreen={true}
+      >
+        <div className="flex flex-col gap-4">
+          <SelectTransactionPeriod />
+          <SelectTransactionType />
+        </div>
+      </FilterTransactionsDialog>
+    </div>
+  );
 }
