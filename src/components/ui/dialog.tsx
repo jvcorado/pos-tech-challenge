@@ -1,6 +1,7 @@
 import React from "react";
 import * as DialogPrimitive from "@radix-ui/react-alert-dialog";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 function Dialog({
   open,
@@ -11,6 +12,7 @@ function Dialog({
   title,
   description,
   isFullScreen = false,
+  showCloseButton = false,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -20,6 +22,7 @@ function Dialog({
   title: string;
   description?: string;
   isFullScreen?: boolean;
+  showCloseButton?: boolean;
 }) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
@@ -39,6 +42,15 @@ function Dialog({
               <DialogPrimitive.Title className="text-lg font-medium text-gray-900">
                 {title}
               </DialogPrimitive.Title>
+              {showCloseButton && (
+                <button
+                  onClick={() => onOpenChange(false)}
+                  className="ml-4 text-gray-500 hover:text-black cursor-pointer"
+                  aria-label="Fechar"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
             </div>
             {description && (
               <DialogPrimitive.Description className="mt-2 text-sm text-gray-500">

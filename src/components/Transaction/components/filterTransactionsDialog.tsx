@@ -8,7 +8,9 @@ const FilterTransactionsDialog = ({
   description,
   onOpenChange,
   onConfirmAction,
+  onClearFilters,
   isFullScreen = false,
+  showCloseButton = false,
   children,
 }: {
   open: boolean;
@@ -16,7 +18,9 @@ const FilterTransactionsDialog = ({
   description?: string;
   onOpenChange: (open: boolean) => void;
   onConfirmAction: () => void;
+  onClearFilters: () => void;
   isFullScreen?: boolean;
+  showCloseButton?: boolean;
   children?: React.ReactNode;
 }) => {
   return (
@@ -35,14 +39,17 @@ const FilterTransactionsDialog = ({
       }
       cancelComponent={
         <Button
-          text="Limpar"
+          text="Limpar e fechar"
           colors="black"
-          onClick={() => onOpenChange(false)}
+          onClick={() => {
+            onClearFilters();
+          }}
         />
       }
       title={title}
       description={description}
       isFullScreen={isFullScreen}
+      showCloseButton={showCloseButton}
     >
       {children || null}
     </Dialog>

@@ -1,13 +1,14 @@
 import React from "react";
 import { NumericFormat } from "react-number-format";
 import Input from "@/components/input";
-import { TransactionType } from "@/models/TransactionType";
+import { TransactionSubtype, TransactionType } from "@/models/TransactionType";
 
 type EditableTransaction = {
   id?: number;
   description: string;
   amount: number;
   type: TransactionType;
+  subtype: TransactionSubtype;
   date: Date;
 };
 
