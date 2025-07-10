@@ -231,6 +231,16 @@
       "date": "2025-07-10T00:09:59.226Z",
       "accountId": "d0d4",
       "account": "techchallenge"
+    },
+    {
+      "id": "384a",
+      "description": "Pagamento de Boleto",
+      "amount": 200,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-10T00:36:31.044Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     }
   ]
 }

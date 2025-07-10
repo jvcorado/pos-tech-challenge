@@ -58,7 +58,7 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(false);
       }
     },
-    [account]
+    [account, currentPage]
   );
 
   const addTransaction = async (tx: Transaction) => {

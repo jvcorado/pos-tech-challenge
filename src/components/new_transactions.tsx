@@ -61,7 +61,7 @@ export default function NewTransactions() {
       await addTransaction(tx);
       setAmount(""); // limpa campo
       setType(selected?.type as TransactionType); // opcional
-      setSubType
+      setSubType(selected?.subtype as TransactionSubtype);
       refresh(); //
       setMensagem("Transação concluída com sucesso!");
       setTimeout(() => setMensagem(""), 20000);
