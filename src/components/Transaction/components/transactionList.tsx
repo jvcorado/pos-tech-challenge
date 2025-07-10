@@ -19,7 +19,11 @@ const TransactionList = ({
   isDeleteTransactionItem,
   handleSelectTransactionItem,
 }: TransactionListProps) => {
-  return (
+  return transactions.length === 0 ? (
+    <div className="text-center text-sm text-gray-500 py-8">
+      Nenhuma transação encontrada com os filtros selecionados.
+    </div>
+  ) : (
     <>
       {transactions.map((transaction: Transaction) => (
         <div key={transaction.id} className="pr-1">

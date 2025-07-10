@@ -18,21 +18,33 @@ import SelectTransactionPeriod from "@/components/Transaction/components/selectT
 import Input from "@/components/input";
 import { useBank } from "@/context/BankContext";
 import { Transaction } from "@/models/Transaction";
-import { TransactionType } from "@/models/TransactionType";
+import { TransactionSubtype, TransactionType } from "@/models/TransactionType";
 import SelectTransactionType from "@/components/Transaction/components/selectTransactionType";
 import EditTransactionForm from "@/components/Transaction/components/editTransactionForm";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
+import PaginationControls from "@/components/paginationControls";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type EditableTransaction = {
   id?: number;
   description: string;
   amount: number;
   type: TransactionType;
+  subtype: TransactionSubtype;
   date: Date;
 };
 
 export default function TransactionsSection() {
-  const { transactions, updateTransaction, deleteTransaction, loading } =
-    useBank();
+  const {
+    transactions,
+    updateTransaction,
+    deleteTransaction,
+    loading,
+    currentPage,
+    totalTransactions,
+    changePage,
+  } = useBank();
+  const isMobile = useIsMobile();
   const [isEditTransactionItem, setIsEditTransactionItem] = useState(false);
   const [isDeleteTransactionItem, setIsDeleteTransactionItem] = useState(false);
   const [isOpenFilterDialog, setIsOpenFilterDialog] = useState(false);
@@ -41,6 +53,20 @@ export default function TransactionsSection() {
   >(undefined);
   const [isSelectingTransactionItem, setIsSelectingTransactionItem] =
     useState(false);
+  const [searchTransaction, setSearchTransaction] = useState("");
+  const [selectedPeriod, setSelectedPeriod] = useState("year");
+  const [selectedSubtype, setSelectedSubtype] = useState<string | undefined>(
+    undefined
+  );
+  const [tempPeriod, setTempPeriod] = useState(selectedPeriod);
+  const [tempSubtype, setTempSubtype] = useState(selectedSubtype);
+  const transactionsPerPage = 10;
+  const filteredTransactions = useFilteredTransactions({
+    transactions,
+    selectedPeriod,
+    selectedSubtype,
+    search: searchTransaction,
+  });
 
   const handleSelectTransactionItem = (transaction: Transaction) => {
     setEditableTransaction({
@@ -48,6 +74,7 @@ export default function TransactionsSection() {
       description: transaction.description,
       amount: transaction.amount,
       type: transaction.type,
+      subtype: transaction.subtype,
       date: transaction.date,
     });
 
@@ -60,6 +87,7 @@ export default function TransactionsSection() {
         editableTransaction.description,
         editableTransaction.amount,
         editableTransaction.type,
+        editableTransaction.subtype,
         editableTransaction.id,
         editableTransaction.date
       );
@@ -78,6 +106,29 @@ export default function TransactionsSection() {
       setIsDeleteTransactionItem(false);
       setEditableTransaction(undefined);
     }
+  };
+
+  const handleOpenFilterDialog = (open: boolean) => {
+    setIsOpenFilterDialog(open);
+    if (open) {
+      setTempPeriod(selectedPeriod);
+      setTempSubtype(selectedSubtype);
+    }
+  };
+
+  const handleConfirmFilters = () => {
+    setSelectedPeriod(tempPeriod);
+    setSelectedSubtype(tempSubtype);
+    setIsOpenFilterDialog(false);
+  };
+
+  const handleClearFilters = () => {
+    setTempPeriod("year");
+    setTempSubtype(undefined);
+  
+    setSelectedPeriod("year");
+    setSelectedSubtype(undefined);
+    setSearchTransaction("");
   };
 
   if (transactions.length === 0 && loading) {
@@ -99,14 +150,17 @@ export default function TransactionsSection() {
   }
 
   return (
-    <div className="h-auto w-auto max-h-full overflow-y-auto custom-scroll relative bg-white flex flex-col items-center rounded-md pt-10 pb-10 justify-between">
-      <div className="flex flex-col text-center md:text-left gap-[24px] overflow-y-auto custom-scroll">
+    <div
+      className="h-auto w-auto h-full overflow-y-scroll overflow-x-hidden scrollbar-hidden relative bg-white 
+      flex flex-col items-center rounded-md pt-10 pb-10 justify-between md:min-w-[245px]"
+    >
+      <div className="flex flex-col text-center md:text-left gap-[24px] overflow-y-auto scrollbar-hidden">
         <div className="flex relative w-full gap-2">
           <Input
             icon={<Search size={18} />}
             placeholder="Buscar transação..."
-            value=""
-            onChange={() => {}}
+            value={searchTransaction}
+            onChange={(e) => setSearchTransaction(e.target.value)}
           />
           <ActionButton
             onClick={() => setIsOpenFilterDialog((prev) => !prev)}
@@ -148,7 +202,7 @@ export default function TransactionsSection() {
           </div>
         </div>
         <TransactionList
-          transactions={transactions}
+          transactions={filteredTransactions}
           isEditTransactionItem={isEditTransactionItem}
           isDeleteTransactionItem={isDeleteTransactionItem}
           handleSelectTransactionItem={handleSelectTransactionItem}
@@ -180,15 +234,31 @@ export default function TransactionsSection() {
         open={isOpenFilterDialog}
         title="Filtrar transações"
         description="Selecione os filtros desejados para visualizar as transações."
-        onOpenChange={setIsDeleteTransactionItem}
-        onConfirmAction={() => {}}
-        isFullScreen={true}
+        onOpenChange={handleOpenFilterDialog}
+        onConfirmAction={handleConfirmFilters}
+        onClearFilters={handleClearFilters}
+        isFullScreen={isMobile}
+        showCloseButton
       >
         <div className="flex flex-col gap-4">
-          <SelectTransactionPeriod />
-          <SelectTransactionType />
+          <SelectTransactionPeriod
+            value={tempPeriod}
+            onChange={setTempPeriod}
+          />
+          <SelectTransactionType
+            value={tempSubtype}
+            onChange={setTempSubtype}
+          />
         </div>
       </FilterTransactionsDialog>
+
+      <div className="absolute bottom-0 left-0 w-full bg-white shadow-md">
+        <PaginationControls
+          currentPage={currentPage}
+          totalPages={Math.ceil(totalTransactions / transactionsPerPage)}
+          onPageChange={changePage}
+        />
+      </div>
     </div>
   );
 }
