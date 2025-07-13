@@ -2,6 +2,7 @@
 import { Transaction } from "./Transaction";
 import { TransactionService } from "@/services/TransactionService";
 import { TransactionType } from "./TransactionType";
+import type { PaginationMeta } from "@/types/Pagination";
 
 export class Account {
   public id?: number;
@@ -28,6 +29,15 @@ export class Account {
     return await TransactionService.getAllByAccount(this.name);
   }
 
+  async getTransactionsPaginated(
+    page = 1
+  ): Promise<{ transactions: Transaction[]; pagination: PaginationMeta }> {
+    return await TransactionService.getAllByAccountPaginated({
+      accountName: this.name,
+      page,
+    });
+  }
+
   // Busca uma transação específica pelo ID
   async getTransactionById(id: number): Promise<Transaction | undefined> {
     const tx = await TransactionService.getById(id);
@@ -48,7 +58,10 @@ export class Account {
   }
 
   // Valida transação antes de adicionar ou atualizar
-  private async validateTransaction(amount: number, type: TransactionType): Promise<boolean> {
+  private async validateTransaction(
+    amount: number,
+    type: TransactionType
+  ): Promise<boolean> {
     if (type === TransactionType.INCOME && amount <= 0) {
       throw new Error("O valor de adição deve ser maior que zero.");
     }
@@ -63,7 +76,7 @@ export class Account {
   // Adiciona nova transação (salva via API)
   async addTransaction(tx: Transaction): Promise<void> {
     await this.validateTransaction(tx.amount, tx.type);
-    await TransactionService.create(tx, this.name);
+    await TransactionService.create(tx, this.name, this.id);
   }
 
   // Atualiza transação existente (salva via API)

@@ -3,31 +3,23 @@
 import { useState, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { useBank } from "@/context/BankContext";
-import { TransactionType } from "@/models/TransactionType";
+import { TransactionSubtype, TransactionType } from "@/models/TransactionType";
 import { Transaction } from "@/models/Transaction";
 
 import Transacaobg2 from "@/assets/illustrations/Transacaobg2";
 import Transacaobg3 from "@/assets/illustrations/Transacaobg3";
 import Transacaobg1 from "@/assets/illustrations/Transacaobg1";
 import IconeSeta from "@/assets/illustrations/IconeSeta";
-
-const tipos: { label: string; value: TransactionType }[] = [
-  { label: "DOC/TED", value: TransactionType.EXPENSE },
-  { label: "Pagamento de Boleto", value: TransactionType.EXPENSE },
-  { label: "Câmbio de Moeda", value: TransactionType.INCOME },
-  { label: "Empréstimo e Financiamento", value: TransactionType.INCOME },
-  { label: "Depósito", value: TransactionType.INCOME },
-  { label: "Transferencia", value: TransactionType.EXPENSE },
-];
+import { transactionTypes } from "@/constants/transactionTypes";
 
 export default function NewTransactions() {
-  //const [valor, setValor] = useState('');
   const [data, setData] = useState("");
-  const [selected, setSelected] = useState<(typeof tipos)[0] | null>(null);
+  const [selected, setSelected] = useState<(typeof transactionTypes)[0] | null>(null);
 
   const { addTransaction, refresh } = useBank();
 
   const [type, setType] = useState<TransactionType>(TransactionType.INCOME);
+  const [subSubtype, setSubType] = useState<TransactionSubtype>(TransactionSubtype.DOC_TED);
   const [amount, setAmount] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [mensagem, setMensagem] = useState("");
@@ -42,9 +34,9 @@ export default function NewTransactions() {
   };
 
   useEffect(() => {
-    const hoje = new Date();
-    const formatada = hoje.toISOString().split("T")[0];
-    setData(formatada);
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+    setData(formattedDate);
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -59,15 +51,17 @@ export default function NewTransactions() {
     try {
       setError(null);
       const tx = new Transaction(
-        "Nova transação: " + selected?.label,
+        selected?.label as string,
         parsedAmount,
         type,
-        undefined,
-        new Date(data)
+        subSubtype,
+        undefined, // ID opcional, será gerado pelo backend
+        new Date()
       );
       await addTransaction(tx);
       setAmount(""); // limpa campo
-      setType(selected?.value as TransactionType); // opcional
+      setType(selected?.type as TransactionType); // opcional
+      setSubType(selected?.subtype as TransactionSubtype);
       refresh(); //
       setMensagem("Transação concluída com sucesso!");
       setTimeout(() => setMensagem(""), 20000);
@@ -76,7 +70,6 @@ export default function NewTransactions() {
     }
   }
 
-  console.log(type, "type");
 
   return (
     <div className="w-full gap-6 bg-[#CBCBCB] flex flex-col rounded-md relative">
@@ -99,7 +92,8 @@ export default function NewTransactions() {
             value={selected}
             onChange={(value) => {
               setSelected(value);
-              setType(value?.value as TransactionType);
+              setType(value?.type as TransactionType);
+              setSubType(value?.subtype as TransactionSubtype);
             }}
           >
             {() => (
@@ -114,10 +108,10 @@ export default function NewTransactions() {
                 </Listbox.Button>
 
                 <Listbox.Options className="w-full max-w-[355px] absolute mt-1 border rounded-lg border-[#004D61] bg-white shadow-md text-start text-base z-10">
-                  {tipos.map((tipo) => (
+                  {transactionTypes.map((type) => (
                     <Listbox.Option
-                      key={`${tipo.label}-${tipo.value}`}
-                      value={tipo}
+                      key={`${type.label}-${type.subtype}`}
+                      value={type}
                       className={({ active }) =>
                         `cursor-pointer px-4 py-2 ${
                           active
@@ -126,7 +120,7 @@ export default function NewTransactions() {
                         }`
                       }
                     >
-                      {tipo.label}
+                      {type.label}
                     </Listbox.Option>
                   ))}
                 </Listbox.Options>
@@ -136,7 +130,7 @@ export default function NewTransactions() {
           <input
             type="hidden"
             name="tipoTransacao"
-            value={selected?.value || ""}
+            value={selected?.type || ""}
           />
         </div>
 
