@@ -241,6 +241,55 @@
       "date": "2025-07-10T00:36:31.044Z",
       "accountId": "d0d4",
       "account": "techchallenge"
+    },
+    {
+      "id": "51fa",
+      "amount": 122.22,
+      "type": "INCOME",
+      "subtype": "DOC_TED",
+      "date": "2025-07-17T01:48:28.677Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "9c22",
+      "description": "Pagamento de Boleto",
+      "amount": 300.99,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-17T02:03:52.809Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "bda3",
+      "description": "Depósito",
+      "amount": 450,
+      "type": "INCOME",
+      "subtype": "deposito",
+      "date": "2025-07-17T02:18:07.750Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "d88e",
+      "description": "Depósito",
+      "amount": 45,
+      "type": "INCOME",
+      "subtype": "deposito",
+      "date": "2025-07-17T02:18:34.385Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "3240",
+      "description": "Depósito",
+      "amount": 45,
+      "type": "INCOME",
+      "subtype": "deposito",
+      "date": "2025-07-17T02:18:46.256Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     }
   ]
 }

@@ -5,32 +5,42 @@ import { Listbox } from "@headlessui/react";
 import { useBank } from "@/context/BankContext";
 import { TransactionSubtype, TransactionType } from "@/models/TransactionType";
 import { Transaction } from "@/models/Transaction";
+import Button from "@/components/button";
+import { Input } from "@/components/ui/input";
+import { transactionTypes } from "@/constants/transactionTypes";
 
 import Transacaobg2 from "@/assets/illustrations/Transacaobg2";
 import Transacaobg3 from "@/assets/illustrations/Transacaobg3";
 import Transacaobg1 from "@/assets/illustrations/Transacaobg1";
 import IconeSeta from "@/assets/illustrations/IconeSeta";
-import { transactionTypes } from "@/constants/transactionTypes";
 
 export default function NewTransactions() {
   const [data, setData] = useState("");
-  const [selected, setSelected] = useState<(typeof transactionTypes)[0] | null>(null);
+  const [selected, setSelected] = useState<(typeof transactionTypes)[0] | null>(
+    null
+  );
 
   const { addTransaction, refresh } = useBank();
 
   const [type, setType] = useState<TransactionType>(TransactionType.INCOME);
-  const [subSubtype, setSubType] = useState<TransactionSubtype>(TransactionSubtype.DOC_TED);
+  const [subSubtype, setSubType] = useState<TransactionSubtype>(
+    TransactionSubtype.DOC_TED
+  );
   const [amount, setAmount] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [mensagem, setMensagem] = useState("");
+  const [message, setMensage] = useState("");
+  const [disabledButton, setDisabledButton] = useState(true);
+  const [lastTransaction, setLastTransaction] = useState<{
+    label: string;
+    amount: number;
+    timestamp: number;
+  } | null>(null);
 
-  const formatarValor = (valor: string) => {
-    // Remove tudo que não for número
-    const somenteNumeros = valor.replace(/\D/g, ".");
+  const formatValue = (valor: string) => {
+    const onlyNumbers = valor.replace(/\D/g, ".");
 
-    // Converte para float com duas casas decimais
-    const numero = (parseFloat(somenteNumeros) / 100).toFixed(2);
-    return numero.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const number = (parseFloat(onlyNumbers) / 100).toFixed(2);
+    return number.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
   useEffect(() => {
@@ -39,11 +49,41 @@ export default function NewTransactions() {
     setData(formattedDate);
   }, []);
 
+  useEffect(() => {
+    const parsedAmount = parseFloat((Number(amount) / 100).toFixed(2));
+
+    const isValidDate = data !== "" && !isNaN(Date.parse(data));
+    const isTypeSelected = selected !== null;
+    const isAmountValid =
+      amount !== "" && !isNaN(parsedAmount) && parsedAmount > 0;
+
+    const isValid =
+      isTypeSelected && isAmountValid && isValidDate && data !== "";
+
+    setDisabledButton(!isValid);
+
+
+  }, [selected, amount, data]);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //const parsedAmount = parseFloat(amount.replace(",", "."));
+
     const parsedAmount = parseFloat((Number(amount) / 100).toFixed(2));
-    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    const now = Date.now();
+
+    if (
+      lastTransaction &&
+      selected?.label === lastTransaction.label &&
+      parsedAmount === lastTransaction.amount &&
+      now - lastTransaction.timestamp < 10000
+    ) {
+      setError(
+        "Transação idêntica lançada recentemente. Confirme se deseja repetir."
+      );
+      return;
+    }
+
+    if (isNaN(parsedAmount) || parsedAmount <= 0 || amount.length > 9) {
       setError("Valor inválido.");
       return;
     }
@@ -55,21 +95,28 @@ export default function NewTransactions() {
         parsedAmount,
         type,
         subSubtype,
-        undefined, // ID opcional, será gerado pelo backend
+        undefined,
         new Date()
       );
+
       await addTransaction(tx);
-      setAmount(""); // limpa campo
-      setType(selected?.type as TransactionType); // opcional
+
+      setAmount("");
+      setType(selected?.type as TransactionType);
       setSubType(selected?.subtype as TransactionSubtype);
-      refresh(); //
-      setMensagem("Transação concluída com sucesso!");
-      setTimeout(() => setMensagem(""), 20000);
+      setLastTransaction({
+        label: selected?.label as string,
+        amount: parsedAmount,
+        timestamp: Date.now(),
+      });
+
+      refresh();
+      setMensage("Transação concluída com sucesso!");
+      setTimeout(() => setMensage(""), 20000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro desconhecido");
     }
   }
-
 
   return (
     <div className="w-full gap-6 bg-[#CBCBCB] flex flex-col rounded-md relative">
@@ -86,7 +133,7 @@ export default function NewTransactions() {
         noValidate
         className="relative min-h-[402px] flex flex-col z-10 "
       >
-        {/* Tipo de transação */}
+
         <div className="z-10 relative pt-5 rounded-md ml-4 sm:ml-8 md:ml-16">
           <Listbox
             value={selected}
@@ -134,29 +181,30 @@ export default function NewTransactions() {
           />
         </div>
 
-        {/* valor */}
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16 w-full max-w-[250px]">
           <label
-            htmlFor="valor"
+            htmlFor="value"
             className="block font-medium mb-1 text-white text-base"
           >
             Valor:
           </label>
-          <input
+          <Input
             type="text"
-            id="valor"
-            name="valor"
+            id="value"
+            name="value"
             required
             placeholder="R$ 0,00"
+            inputMode="numeric"
             className="w-full min-h-[48px] border border-[#004D61] bg-white text-[#444444] text-center rounded-lg text-base"
-            value={amount ? `R$ ${formatarValor(amount)}` : ""}
+            value={amount ? `R$ ${formatValue(amount)}` : ""}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/\D/g, "");
-              setAmount(rawValue);
+              const limited = rawValue.slice(0, 9);
+              setAmount(limited);
             }}
           />
         </div>
-        {/* data */}
+
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16">
           <label
             htmlFor="data"
@@ -170,23 +218,24 @@ export default function NewTransactions() {
             name="data"
             required
             value={data}
+            max={new Date().toISOString().split("T")[0]}
             onChange={(e) => setData(e.target.value)}
             className="w-full z-10 max-w-[250px] min-h-[48px] border border-[#004D61] bg-white text-[#444444] rounded-lg py-2 px-2 text-base"
           />
         </div>
 
-        <div className="pt-8 ml-4 sm:ml-8 md:ml-16 w-full flex justify-start z-8">
-          {error && <p className="text-red-600">{error}</p>}
-          <button
+        <div className="pt-8 ml-4 sm:ml-8 md:ml-16 w-full flex flex-col justify-start z-8">
+          <Button
             type="submit"
-            className="w-full max-w-[250px] min-h-[48px] bg-[#004D61] text-white rounded-lg font-bold cursor-pointer border-none hover:bg-[#3e8698] transition-colors duration-200 ml-0 "
-          >
-            Concluir transação
-          </button>
+            disabled={disabledButton}
+            colors="dark-blue"
+            text="Concluir transação"
+          />
+          {error && <p className="text-red-600">{error}</p>}
         </div>
-        {mensagem && (
+        {message && (
           <div className="ml-4 sm:ml-8 md:ml-16 mt-4 px-4 py-2 z-10 bg-green-500 text-white rounded-md text-sm w-fit">
-            {mensagem}
+            {message}
           </div>
         )}
       </form>
