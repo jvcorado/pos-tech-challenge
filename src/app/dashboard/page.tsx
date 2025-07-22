@@ -1,7 +1,7 @@
 "use client";
 
 import WelcomeSection from "@/views/WelcomeSection";
-import NewTransactions from "@/components/new_transactions";
+import NewTransactions from "@/components/newTransaction";
 import TransactionsSection from "@/views/TransactionsSection";
 import MenuWrapper from "@/components/menuWrapper";
 

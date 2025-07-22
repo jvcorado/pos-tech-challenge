@@ -1,13 +1,7 @@
 import { useMemo } from "react";
 import { filterTransactionsByPeriod } from "@/lib/filters/transaction";
 import { Transaction } from "@/models/Transaction";
-
-function normalizeString(str: string) {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
+import { normalizeString } from "@/lib/utils";
 
 interface Props {
   transactions: Transaction[];
