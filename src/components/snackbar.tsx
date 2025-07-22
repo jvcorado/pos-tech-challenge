@@ -25,20 +25,20 @@ export default function Snackbar({
 }: SnackbarProps) {
   const colorsMap = {
     info: "bg-blue-500",
-    success: "bg-green-500",
+    success: "bg-green-600",
     error: "bg-red-500",
     warning: "bg-yellow-500",
   };
 
   return (
     <>
-      <Toast.Provider swipeDirection={direction} duration={duration}>
+      <Toast.Provider swipeDirection={direction} duration={200000}>
         {show && (
           <Toast.Root
             defaultOpen
             onOpenChange={setShow}
-            duration={duration}
-            className={`${colorsMap[type]} text-white p-4 rounded-lg shadow-lg transition-all flex items-start gap-4`}
+            duration={200000}
+            className={`bg-yellow-500 text-white p-4 rounded-lg shadow-lg transition-all flex items-start gap-4`}
           >
             <div>
               {title && (

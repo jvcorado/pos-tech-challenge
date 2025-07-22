@@ -1,5 +1,26 @@
 {
-  "accounts": [],
+  "accounts": [
+    {
+      "id": "8980",
+      "name": "leticia nakamura"
+    },
+    {
+      "id": "ac52",
+      "name": "roberta"
+    },
+    {
+      "id": "089d",
+      "name": "lucas"
+    },
+    {
+      "id": "d0d4",
+      "name": "techchallenge"
+    },
+    {
+      "id": "4fce",
+      "name": "rafaela"
+    }
+  ],
   "transactions": [
     {
       "id": "913f",
@@ -108,6 +129,26 @@
       "type": "EXPENSE",
       "subtype": "transferencia",
       "date": "2025-07-20T20:12:32.853Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "84c2",
+      "description": "Empréstimo e Financiamento",
+      "amount": 300,
+      "type": "INCOME",
+      "subtype": "emprestimo",
+      "date": "2025-07-20T20:34:48.329Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "6231",
+      "description": "Boleto",
+      "amount": 200,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-20T20:36:23.178Z",
       "accountId": "d0d4",
       "account": "techchallenge"
     }
