@@ -151,6 +151,34 @@
       "date": "2025-07-20T20:36:23.178Z",
       "accountId": "d0d4",
       "account": "techchallenge"
+    },
+    {
+      "id": "1e39",
+      "description": "Boleto",
+      "amount": 150,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-22T01:42:05.031Z",
+      "document": {
+        "path": "./44700858800-IRPF-A-2024-2023-DEC.pdf",
+        "relativePath": "./44700858800-IRPF-A-2024-2023-DEC.pdf"
+      },
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "f130",
+      "description": "Boleto",
+      "amount": 12,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-26T00:01:40.493Z",
+      "document": {
+        "path": "./44700858800-IRPF-A-2024-2023-DEC.pdf",
+        "relativePath": "./44700858800-IRPF-A-2024-2023-DEC.pdf"
+      },
+      "accountId": "d0d4",
+      "account": "techchallenge"
     }
   ]
 }
