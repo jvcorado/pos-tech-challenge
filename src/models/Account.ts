@@ -76,7 +76,7 @@ export class Account {
   // Adiciona nova transação (salva via API)
   async addTransaction(tx: Transaction): Promise<void> {
     await this.validateTransaction(tx.amount, tx.type);
-    await TransactionService.create(tx, this.name, this.id);
+    await TransactionService.addTransactionWithFile(tx, this.name, this.id);
   }
 
   // Atualiza transação existente (salva via API)

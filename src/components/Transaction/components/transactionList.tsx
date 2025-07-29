@@ -45,13 +45,7 @@ const TransactionList = ({
               />
             )}
           </div>
-          <TransactionItem
-            key={transaction.id}
-            date={transaction.date}
-            transactionDescription={transaction.description}
-            transactionType={transaction.type}
-            value={transaction.amount}
-          />
+          <TransactionItem key={transaction.id} transaction={transaction} />
         </div>
       ))}
     </>

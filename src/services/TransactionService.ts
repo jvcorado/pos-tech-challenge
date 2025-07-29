@@ -52,6 +52,7 @@ export class TransactionService {
       type: transaction.type,
       subtype: transaction.subtype,
       date: transaction.date.toISOString(),
+      document: transaction.document || null,
       accountId: accountId,
       account: accountName,
     };
@@ -63,6 +64,41 @@ export class TransactionService {
     });
 
     const data = await res.json();
+    return Transaction.fromJSON(data);
+  }
+
+  static async addTransactionWithFile(
+    transaction: Transaction,
+    accountName: string,
+    accountId?: number
+  ): Promise<Transaction> {
+    const formData = new FormData();
+
+    formData.append("description", transaction.description);
+    formData.append("amount", String(transaction.amount));
+    formData.append("type", transaction.type);
+    formData.append("subtype", transaction.subtype);
+    formData.append("date", transaction.date.toISOString());
+    formData.append("account", accountName);
+
+    if (accountId !== undefined) {
+      formData.append("accountId", accountId.toString());
+    }
+
+    if (transaction.document) {
+      formData.append("document", transaction.document);
+    }
+
+    const response = await fetch(BASE_URL, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao salvar transação");
+    }
+
+    const data = await response.json();
     return Transaction.fromJSON(data);
   }
 

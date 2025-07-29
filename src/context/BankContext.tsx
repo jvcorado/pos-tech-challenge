@@ -47,9 +47,9 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const { transactions: txs, pagination } =
           await account.getTransactionsPaginated(page);
+
         const bal = await account.getBalance();
         setTransactions(txs);
-        // setPagination(pagination);
         setTotalTransactions(pagination.totalItems);
         setBalance(bal);
       } catch (err) {

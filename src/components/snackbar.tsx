@@ -32,12 +32,15 @@ export default function Snackbar({
 
   return (
     <>
-      <Toast.Provider swipeDirection={direction} duration={duration}>
+      <Toast.Provider
+        swipeDirection={direction}
+        duration={duration}
+      >
         {show && (
           <Toast.Root
             defaultOpen
             onOpenChange={setShow}
-            duration={200000}
+            duration={duration}
             className={`${colorsMap[type]} text-white p-4 rounded-lg shadow-lg transition-all flex items-start gap-4`}
           >
             <div>

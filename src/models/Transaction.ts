@@ -6,6 +6,7 @@ interface TransactionJSON {
   amount: number;
   type: TransactionType;
   subtype: TransactionSubtype;
+  document?: File;
   date: string | Date;
 }
 
@@ -16,6 +17,7 @@ export class Transaction {
   public type: TransactionType;
   public subtype: TransactionSubtype;
   public date: Date;
+  public document?: File;
 
   constructor(
     description: string,
@@ -23,7 +25,8 @@ export class Transaction {
     type: TransactionType,
     subtype: TransactionSubtype,
     id?: number,
-    date?: Date
+    document?: File,
+    date?: Date,
   ) {
     this.description = description;
     this.amount = amount;
@@ -31,6 +34,7 @@ export class Transaction {
     this.subtype = subtype;
     if (id !== undefined) this.id = id;
     this.date = date ?? new Date();
+    this.document = document;
   }
 
   static fromJSON(data: TransactionJSON): Transaction {
@@ -40,6 +44,8 @@ export class Transaction {
       data.type,
       data.subtype,
       data.id,
+      data.document,
+
       new Date(data.date)
     );
   }
@@ -51,6 +57,7 @@ export class Transaction {
       amount: this.amount,
       type: this.type,
       date: this.date.toISOString(),
+      document: this.document || null,
     };
   }
 }

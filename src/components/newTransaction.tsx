@@ -9,6 +9,7 @@ import Button from "@/components/button";
 import Snackbar, { SnackbarProps } from "@/components/snackbar";
 import { Input } from "@/components/ui/input";
 import { transactionTypes } from "@/constants/transactionTypes";
+import UploadDocument from "@/components/uploadDocument";
 
 import Transacaobg2 from "@/assets/illustrations/Transacaobg2";
 import Transacaobg3 from "@/assets/illustrations/Transacaobg3";
@@ -16,13 +17,11 @@ import Transacaobg1 from "@/assets/illustrations/Transacaobg1";
 import IconeSeta from "@/assets/illustrations/IconeSeta";
 
 export default function NewTransactions() {
+  const { addTransaction, refresh } = useBank();
   const [data, setData] = useState("");
   const [typeSelected, setTypeSelected] = useState<
     (typeof transactionTypes)[0] | null
   >(null);
-
-  const { addTransaction, refresh } = useBank();
-
   const [type, setType] = useState<TransactionType>(TransactionType.INCOME);
   const [subSubtype, setSubType] = useState<TransactionSubtype>(
     TransactionSubtype.DOC_TED
@@ -39,6 +38,7 @@ export default function NewTransactions() {
     show: showSnackbar,
     setShow: setShowSnackbar,
   });
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
 
   const formatValue = (valor: string) => {
     const onlyNumbers = valor.replace(/\D/g, ".");
@@ -89,10 +89,6 @@ export default function NewTransactions() {
         actionText: "Confirmar",
       });
 
-      setTimeout(() => {
-        setShowSnackbar(false);
-      }, 3000);
-
       return;
     }
 
@@ -105,10 +101,6 @@ export default function NewTransactions() {
         actionText: "Confirmar",
       });
 
-      setTimeout(() => {
-        setShowSnackbar(false);
-      }, 3000);
-
       return;
     }
 
@@ -119,6 +111,7 @@ export default function NewTransactions() {
         type,
         subSubtype,
         undefined,
+        documentFile || undefined,
         new Date()
       );
 
@@ -127,6 +120,7 @@ export default function NewTransactions() {
       setAmount("");
       setType(typeSelected?.type as TransactionType);
       setTypeSelected(null);
+      setDocumentFile(null);
       setSubType(typeSelected?.subtype as TransactionSubtype);
       setLastTransaction({
         label: typeSelected?.label as string,
@@ -154,10 +148,6 @@ export default function NewTransactions() {
         type: "error",
       });
     }
-
-    setTimeout(() => {
-      setShowSnackbar(false);
-    }, 3000);
   }
 
   return (
@@ -166,7 +156,7 @@ export default function NewTransactions() {
         <Transacaobg2 className="w-full h-full" />
       </div>
 
-      <h2 className="relative pt-4 text-[25px] sm:text-[22px] md:text-[25px] font-bold text-white z-10 sm:text-left ml-4 sm:ml-8 md:ml-16">
+      <h2 className="relative pt-4 text-[25px] sm:text-[22px] md:text-[25px] font-bold z-10 sm:text-left ml-4 sm:ml-8 md:ml-16">
         Nova transação
       </h2>
 
@@ -225,7 +215,7 @@ export default function NewTransactions() {
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16 w-full max-w-[250px]">
           <label
             htmlFor="value"
-            className="block font-medium mb-1 text-white text-base"
+            className="block font-medium mb-1 text-base"
           >
             Valor:
           </label>
@@ -249,7 +239,7 @@ export default function NewTransactions() {
         <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16">
           <label
             htmlFor="data"
-            className="block font-medium mb-1 text-white text-base"
+            className="block font-medium mb-1 text-base"
           >
             Data:
           </label>
@@ -263,6 +253,16 @@ export default function NewTransactions() {
             max={new Date().toISOString().split("T")[0]}
             onChange={(e) => setData(e.target.value)}
             className="w-full z-10 max-w-[250px] min-h-[48px] border border-[#004D61] bg-white text-[#444444] rounded-lg py-2 px-2 text-base"
+          />
+        </div>
+
+        <div className="relative pt-4 ml-4 sm:ml-8 md:ml-16">
+          <label className="block font-medium mb-1 text-base">
+            Comprovante:
+          </label>
+          <UploadDocument
+            onFileSelected={(file) => setDocumentFile(file)}
+            selectedFile={documentFile}
           />
         </div>
 

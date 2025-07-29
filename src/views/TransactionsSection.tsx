@@ -32,6 +32,7 @@ type EditableTransaction = {
   type: TransactionType;
   subtype: TransactionSubtype;
   date: Date;
+  document?: File;
 };
 
 export default function TransactionsSection() {
@@ -76,6 +77,7 @@ export default function TransactionsSection() {
       type: transaction.type,
       subtype: transaction.subtype,
       date: transaction.date,
+      document: transaction.document,
     });
 
     setIsSelectingTransactionItem(true);
@@ -89,7 +91,8 @@ export default function TransactionsSection() {
         editableTransaction.type,
         editableTransaction.subtype,
         editableTransaction.id,
-        editableTransaction.date
+        editableTransaction.document,
+        editableTransaction.date,
       );
       updateTransaction(updatedTransaction);
       setIsSelectingTransactionItem(false);
