@@ -10,7 +10,7 @@ type TransactionItemProps = {
   transaction: Transaction;
 };
 export default function TransactionItem({ transaction }: TransactionItemProps) {
-  const { date, description, type, amount, document } = transaction;
+  const { date, description, type, amount } = transaction;
   const monthName = format(date, "MMMM", { locale: ptBR });
   const capitalizedMonth =
     monthName.charAt(0).toUpperCase() + monthName.slice(1);
