@@ -1,7 +1,7 @@
 // services/TransactionService.ts
 import { Transaction } from "@/models/Transaction";
 
-const BASE_URL = "http://localhost:3001/transactions";
+const BASE_URL = "http://localhost:3002/transactions";
 
 export class TransactionService {
   // Busca todas as transações associadas a uma conta pelo nome

@@ -1,7 +1,7 @@
 // services/AuthService.ts
 import { Account } from "@/models/Account";
 
-const BASE_URL = "http://localhost:3001/accounts";
+const BASE_URL = "http://localhost:3002/accounts";
 
 export class AuthService {
     // Simula login: busca conta pelo nome

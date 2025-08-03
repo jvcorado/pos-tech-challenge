@@ -3,6 +3,18 @@
     {
       "id": "8980",
       "name": "leticia nakamura"
+    },
+    {
+      "id": "b334",
+      "name": "1111"
+    },
+    {
+      "id": "0ef0",
+      "name": "jv"
+    },
+    {
+      "id": "a788",
+      "name": "guilherme"
     }
   ],
   "transactions": [
@@ -61,6 +73,30 @@
       "type": "INCOME",
       "date": "2025-06-01T17:07:59.990Z",
       "account": "leticia nakamura"
+    },
+    {
+      "id": "0fa2",
+      "description": "Nova transação: DOC/TED",
+      "amount": 30,
+      "type": "EXPENSE",
+      "date": "2025-06-01T17:49:34.198Z",
+      "account": "1111"
+    },
+    {
+      "id": "d494",
+      "description": "Nova transação: DOC/TED",
+      "amount": 0.1,
+      "type": "EXPENSE",
+      "date": "2025-07-09T02:29:39.305Z",
+      "account": "jv"
+    },
+    {
+      "id": "9603",
+      "description": "Nova transação: DOC/TED",
+      "amount": 10,
+      "type": "EXPENSE",
+      "date": "2025-08-03T16:41:35.043Z",
+      "account": "guilherme"
     }
   ]
 }
