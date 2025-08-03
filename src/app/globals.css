@@ -160,3 +160,9 @@
   background-color: #d1d1d1; /* cor verde usada no seu app */
   border-radius: 8px;
 }
+
+/* Graficos Labels */
+.recharts-pie-label-text {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}

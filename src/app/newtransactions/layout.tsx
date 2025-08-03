@@ -1,9 +1,6 @@
 import Container from "@/components/container";
 import Header from "@/components/header";
-import Footer from "@/components/home/footer";
 import ProtectedRoute from "@/components/protectedRoute";
-import { faChartLine } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Layout({
   children,
@@ -14,8 +11,6 @@ export default function Layout({
     <ProtectedRoute>
       <Header />
       <Container>{children}</Container>
-      <Footer />
     </ProtectedRoute>
-
   );
 }

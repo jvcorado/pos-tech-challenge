@@ -11,6 +11,10 @@
     {
       "id": "089d",
       "name": "lucas"
+    },
+    {
+      "id": "9ef3",
+      "name": "lais"
     }
   ],
   "transactions": [
@@ -117,6 +121,134 @@
       "type": "EXPENSE",
       "date": "2025-06-01T00:00:00.000Z",
       "account": "roberta"
+    },
+    {
+      "id": "db4a",
+      "description": "Nova transação: Pagamento de Boleto",
+      "amount": 45,
+      "type": "EXPENSE",
+      "date": "2025-07-13T00:00:00.000Z",
+      "account": "roberta"
+    },
+    {
+      "id": "ed8c",
+      "description": "Nova transação: Depósito",
+      "amount": 1000,
+      "type": "INCOME",
+      "date": "2025-07-13T00:00:00.000Z",
+      "account": "leticia nakamura"
+    },
+    {
+      "id": "654d",
+      "description": "Nova transação: Pagamento de Boleto",
+      "amount": 12.33,
+      "type": "EXPENSE",
+      "date": "2025-07-14T00:00:00.000Z",
+      "account": "leticia nakamura"
+    },
+    {
+      "id": "a68c",
+      "description": "Nova transação: Transferencia",
+      "amount": 12.33,
+      "type": "EXPENSE",
+      "date": "2025-07-14T00:00:00.000Z",
+      "account": "leticia nakamura"
+    },
+    {
+      "id": "7e29",
+      "description": "Nova transação: Compras Online",
+      "amount": 89,
+      "type": "EXPENSE",
+      "date": "2025-07-15T00:00:00.000Z",
+      "account": "leticia nakamura"
+    },
+    {
+      "id": "d973",
+      "description": "Nova transação: Assinaturas",
+      "amount": 45,
+      "type": "EXPENSE",
+      "date": "2025-07-15T00:00:00.000Z",
+      "account": "leticia nakamura"
+    },
+    {
+      "id": "32bd",
+      "description": "Nova transação: Depósito",
+      "amount": 20000,
+      "type": "INCOME",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "fa95",
+      "description": "Nova transação: DOC/TED",
+      "amount": 12.22,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "2a06",
+      "description": "Nova transação: Pagamento de Boleto",
+      "amount": 20,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "1f73",
+      "description": "Nova transação: Pagamento de Boleto",
+      "amount": 20,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "d405",
+      "description": "Nova transação: Transferencia",
+      "amount": 12.22,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "c493",
+      "description": "Nova transação: Empréstimo e Financiamento",
+      "amount": 12.23,
+      "type": "INCOME",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "7f4c",
+      "description": "Nova transação: Restaurante",
+      "amount": 100,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "2e12",
+      "description": "Nova transação: Transporte",
+      "amount": 20,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "a4ed",
+      "description": "Nova transação: Empréstimo e Financiamento",
+      "amount": 11.11,
+      "type": "EXPENSE",
+      "date": "2025-07-20T00:00:00.000Z",
+      "account": "lais"
+    },
+    {
+      "id": "04e6",
+      "description": "Nova transação: Cashback",
+      "amount": 100,
+      "type": "INCOME",
+      "date": "2025-07-31T00:00:00.000Z",
+      "account": "lais"
     }
   ]
 }

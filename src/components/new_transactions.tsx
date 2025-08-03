@@ -18,6 +18,12 @@ const tipos: { label: string; value: TransactionType }[] = [
   { label: "Empréstimo e Financiamento", value: TransactionType.INCOME },
   { label: "Depósito", value: TransactionType.INCOME },
   { label: "Transferencia", value: TransactionType.EXPENSE },
+  { label: "Restaurante", value: TransactionType.EXPENSE },
+  { label: "Transporte", value: TransactionType.EXPENSE },
+  { label: "Salário", value: TransactionType.INCOME },
+  { label: "Reembolso", value: TransactionType.INCOME },
+  { label: "Cashback", value: TransactionType.INCOME },
+
 ];
 
 export default function NewTransactions() {
@@ -104,25 +110,26 @@ export default function NewTransactions() {
           >
             {() => (
               <div className="relative">
-                <Listbox.Button className="w-full max-w-[355px] z-10 min-h-[48px] border border-[#004D61] rounded-lg bg-white text-[#444444] px-4 py-2 text-base flex items-center justify-between">
+                <Listbox.Button className="w-full max-w-[355px] z-10 min-h-[48px] border border-[#004D61] rounded-xl bg-white text-[#333] px-4 py-3 text-base flex items-center justify-between shadow-sm hover:shadow-md transition-all duration-200">
                   <span className="truncate">
-                    {selected
-                      ? selected.label
-                      : "Selecione o tipo de transação"}
+                    {selected ? selected.label : "Selecione o tipo de transação"}
                   </span>
                   <IconeSeta />
                 </Listbox.Button>
 
-                <Listbox.Options className="w-full max-w-[355px] absolute mt-1 border rounded-lg border-[#004D61] bg-white shadow-md text-start text-base z-10">
+                <Listbox.Options
+                  className="w-full max-w-[355px] absolute mt-2 border rounded-xl border-[#004D61] bg-white shadow-lg text-base z-20 max-h-60 overflow-y-auto ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
                   {tipos.map((tipo) => (
                     <Listbox.Option
                       key={`${tipo.label}-${tipo.value}`}
                       value={tipo}
-                      className={({ active }) =>
-                        `cursor-pointer px-4 py-2 ${
-                          active
-                            ? "bg-[#E4EDE3] text-black rounded-lg"
-                            : "text-[#444444]"
+                      className={({ active, selected }) =>
+                        `cursor-pointer px-4 py-2 transition-all duration-150 rounded-md ${active
+                          ? "bg-[#E4EDE3] text-black"
+                          : selected
+                            ? "bg-[#f2f2f2] text-[#222]"
+                            : "text-[#444]"
                         }`
                       }
                     >
@@ -133,6 +140,7 @@ export default function NewTransactions() {
               </div>
             )}
           </Listbox>
+
           <input
             type="hidden"
             name="tipoTransacao"
@@ -204,5 +212,6 @@ export default function NewTransactions() {
         <Transacaobg3 className="w-[100px] h-[100px] sm:w-[120px] right-0 sm:h-[120px] items-center object-contain z-10 lg:hidden" />
       </div>
     </div>
+    
   );
 }

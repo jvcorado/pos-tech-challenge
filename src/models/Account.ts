@@ -47,6 +47,54 @@ export class Account {
     }, 0);
   }
 
+  //calcula despesas totais
+  async getExpenses(): Promise<number> {
+    const transactions = await this.getTransactions();
+    return transactions.reduce((acc, tx) => {
+      if (tx.type === TransactionType.EXPENSE) {
+        console.log(acc + tx.amount)
+        return acc += tx.amount;
+      }
+      return acc;
+    }, 0);
+  }
+  
+//calcula total de despesas baseado nos meses e categorias 
+async getExpensesByCategoryForMonth(month: number, year: number): Promise<Transaction[]> {
+  const transactions = await this.getTransactions();
+  const filtered = transactions.filter((tx) => {
+    const txDate = new Date(tx.date);
+    return (
+      tx.type === TransactionType.EXPENSE &&
+      txDate.getMonth() + 1 === month &&
+      txDate.getFullYear() === year
+    );
+  });
+
+  const grouped: Record<string, Transaction> = {};
+
+  filtered.forEach((tx) => {
+    const category = tx.description || "Outros";
+
+    if (!grouped[category]) {
+      
+      grouped[category] = Transaction.fromJSON({
+        id: tx.id,
+        description: category,
+        amount: tx.amount,
+        type: TransactionType.EXPENSE,
+        date: tx.date,
+      });
+      
+    }
+
+    grouped[category].amount += tx.amount;
+  });
+
+  return Object.values(grouped);
+}
+
+
   // Valida transação antes de adicionar ou atualizar
   private async validateTransaction(amount: number, type: TransactionType): Promise<boolean> {
     if (type === TransactionType.INCOME && amount <= 0) {

@@ -11,12 +11,14 @@ import { Account } from "@/models/Account";
 import { Transaction } from "@/models/Transaction";
 import { useAuth } from "./AuthContext";
 
+
 interface BankContextData {
   account: Account;
   transactions: Transaction[];
   balance: number;
   loading: boolean;
   error: string | null;
+  Totalexpenses: number;
   refresh: () => Promise<void>;
   addTransaction: (tx: Transaction) => Promise<void>;
   updateTransaction: (tx: Transaction) => Promise<void>;
@@ -29,7 +31,8 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
   const { account } = useAuth();
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance ] = useState(0);
+  const [Totalexpenses, setExpenses ] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,8 +43,10 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const txs = await account.getTransactions();
       const bal = await account.getBalance();
+      const exp = await account.getExpenses();
       setTransactions(txs);
       setBalance(bal);
+      setExpenses(exp)
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -67,6 +72,7 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
     await refresh();
   };
 
+    
   useEffect(() => {
     if (account) refresh();
   }, [refresh, account]);
@@ -88,6 +94,7 @@ export const BankProvider = ({ children }: { children: React.ReactNode }) => {
         addTransaction,
         updateTransaction,
         deleteTransaction,
+        Totalexpenses,
       }}
     >
       {children}
