@@ -139,11 +139,19 @@
   }
 }
 
-.custom-scroll::-webkit-scrollbar {
+/* .custom-scroll::-webkit-scrollbar {
   display: none;
 }
 
 .custom-scroll {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+} */
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

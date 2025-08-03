@@ -1,7 +1,7 @@
 import React from "react";
 
 const Transacaobg2 = ({ className }: { className: string }) => (
-  <svg
+  <svg className={className}
     width="178"
     height="180"
     viewBox="0 0 178 180"

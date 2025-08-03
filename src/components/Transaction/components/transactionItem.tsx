@@ -20,6 +20,7 @@ export default function TransactionItem({
   const monthName = format(date, "MMMM", { locale: ptBR });
   const capitalizedMonth =
     monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    console.log(date);
   const formattedDate = format(date, "dd/MM/yyyy", { locale: ptBR });
 
   return (
@@ -28,7 +29,7 @@ export default function TransactionItem({
         {capitalizedMonth}
       </p>
       <div className="flex flex-row items-center justify-between">
-        <p className="text-black text-base">{transactionDescription}</p>
+        <p className="text-black text-base text-start">{transactionDescription}</p>
         <p className="text-[#8B8B8B] text-[13px] text-sm">{formattedDate}</p>
       </div>
       <p className="self-start text-black text-base font-bold">{`${

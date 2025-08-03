@@ -5,98 +5,152 @@
       "name": "leticia nakamura"
     },
     {
-      "id": "b334",
-      "name": "1111"
+      "id": "ac52",
+      "name": "roberta"
     },
     {
-      "id": "0ef0",
-      "name": "jv"
+      "id": "089d",
+      "name": "lucas"
     },
     {
-      "id": "a788",
-      "name": "guilherme"
+      "id": "d0d4",
+      "name": "techchallenge"
+    },
+    {
+      "id": "4fce",
+      "name": "rafaela"
     }
   ],
   "transactions": [
     {
-      "id": "e5e6",
-      "description": "Nova transação: DOC/TED",
-      "amount": 30,
+      "id": "913f",
+      "description": "Pagamento de Boleto",
+      "amount": 230,
       "type": "EXPENSE",
-      "date": "2025-06-01T17:04:15.635Z",
-      "account": "leticia nakamura"
+      "subtype": "boleto",
+      "date": "2025-07-20T19:52:56.345Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "6c4e",
-      "description": "Nova transação: Empréstimo e Financiamento",
-      "amount": 30,
+      "id": "57ec",
+      "description": "Pagamento de Boleto",
+      "amount": 12.31,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-20T19:53:02.055Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "7388",
+      "description": "Boleto",
+      "amount": 120,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-20T20:04:26.479Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "a3cd",
+      "description": "Depósito",
+      "amount": 3000,
       "type": "INCOME",
-      "date": "2025-06-01T17:05:37.615Z",
-      "account": "leticia nakamura"
+      "subtype": "deposito",
+      "date": "2025-07-20T20:04:44.738Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "86c4",
-      "description": "Nova transação: Pagamento de Boleto",
-      "amount": 60,
+      "id": "47b0",
+      "description": "Boleto",
+      "amount": 120,
       "type": "EXPENSE",
-      "date": "2025-06-01T17:05:50.742Z",
-      "account": "leticia nakamura"
+      "subtype": "boleto",
+      "date": "2025-07-20T20:11:26.698Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "78fd",
-      "description": "Nova transação: DOC/TED",
-      "amount": 30,
-      "type": "EXPENSE",
-      "date": "2025-06-01T17:07:10.332Z",
-      "account": "leticia nakamura"
-    },
-    {
-      "id": "209d",
-      "description": "Nova transação: Empréstimo e Financiamento",
-      "amount": 30,
+      "id": "990f",
+      "description": "Depósito",
+      "amount": 1200,
       "type": "INCOME",
-      "date": "2025-06-01T17:07:24.572Z",
-      "account": "leticia nakamura"
+      "subtype": "deposito",
+      "date": "2025-07-20T20:11:37.616Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "ab0d",
-      "description": "Nova transação: Câmbio de Moeda",
-      "amount": 30,
+      "id": "625b",
+      "description": "Depósito",
+      "amount": 800,
       "type": "INCOME",
-      "date": "2025-06-01T17:07:36.088Z",
-      "account": "leticia nakamura"
+      "subtype": "deposito",
+      "date": "2025-07-20T20:11:53.431Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "d009",
-      "description": "Nova transação: Empréstimo e Financiamento",
-      "amount": 30,
+      "id": "3e35",
+      "description": "Câmbio de Moeda",
+      "amount": 12,
       "type": "INCOME",
-      "date": "2025-06-01T17:07:59.990Z",
-      "account": "leticia nakamura"
+      "subtype": "cambio",
+      "date": "2025-07-20T20:12:04.042Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "0fa2",
-      "description": "Nova transação: DOC/TED",
-      "amount": 30,
+      "id": "6730",
+      "description": "Transferência",
+      "amount": 500,
       "type": "EXPENSE",
-      "date": "2025-06-01T17:49:34.198Z",
-      "account": "1111"
+      "subtype": "transferencia",
+      "date": "2025-07-20T20:12:15.972Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "d494",
-      "description": "Nova transação: DOC/TED",
-      "amount": 0.1,
-      "type": "EXPENSE",
-      "date": "2025-07-09T02:29:39.305Z",
-      "account": "jv"
+      "id": "502d",
+      "description": "Empréstimo e Financiamento",
+      "amount": 600,
+      "type": "INCOME",
+      "subtype": "emprestimo",
+      "date": "2025-07-20T20:12:24.654Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     },
     {
-      "id": "9603",
-      "description": "Nova transação: DOC/TED",
-      "amount": 10,
+      "id": "73f3",
+      "description": "Transferência",
+      "amount": 600,
       "type": "EXPENSE",
-      "date": "2025-08-03T16:41:35.043Z",
-      "account": "guilherme"
+      "subtype": "transferencia",
+      "date": "2025-07-20T20:12:32.853Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "84c2",
+      "description": "Empréstimo e Financiamento",
+      "amount": 300,
+      "type": "INCOME",
+      "subtype": "emprestimo",
+      "date": "2025-07-20T20:34:48.329Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
+    },
+    {
+      "id": "6231",
+      "description": "Boleto",
+      "amount": 200,
+      "type": "EXPENSE",
+      "subtype": "boleto",
+      "date": "2025-07-20T20:36:23.178Z",
+      "accountId": "d0d4",
+      "account": "techchallenge"
     }
   ]
 }
